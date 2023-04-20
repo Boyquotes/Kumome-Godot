@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0kd3jux5k5k6"]
+
+[ext_resource type="Script" path="res://scripts/board.gd" id="1_de3kb"]
+
+[node name="board" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_de3kb")
+colors = Array[Color]([Color(0, 0.819608, 0.819608, 1), Color(0.352941, 0.384314, 0.713726, 1)])
+
+[connection signal="resized" from="." to="." method="_on_resized"]

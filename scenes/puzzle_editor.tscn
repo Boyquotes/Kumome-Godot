@@ -1,0 +1,104 @@
+[gd_scene load_steps=5 format=3 uid="uid://byh6ic0dkd4eb"]
+
+[ext_resource type="Script" path="res://scripts/board.gd" id="1_aglyg"]
+[ext_resource type="Script" path="res://scripts/puzzle_editor.gd" id="1_j1bp4"]
+[ext_resource type="PackedScene" uid="uid://wvrbv8nef2wt" path="res://scenes/puzzle_maker_button.tscn" id="2_sse3l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sinjh"]
+font_size = 128
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_j1bp4")
+
+[node name="board" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -900.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_aglyg")
+dimensions = Vector2i(6, 6)
+colors = Array[Color]([Color(0, 0.772549, 0.694118, 1), Color(0.129412, 0.572549, 0.913725, 1)])
+
+[node name="buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Area2D" parent="buttons" instance=ExtResource("2_sse3l")]
+position = Vector2(140, 1000)
+
+[node name="Area2D2" parent="buttons" instance=ExtResource("2_sse3l")]
+position = Vector2(400, 1000)
+id = "bot"
+
+[node name="Area2D3" parent="buttons" instance=ExtResource("2_sse3l")]
+position = Vector2(660, 1000)
+id = "mine"
+
+[node name="touch_spots" type="Node2D" parent="."]
+
+[node name="avatars" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 1185.0
+offset_right = 466.0
+offset_bottom = 1363.0
+text = "6"
+label_settings = SubResource("LabelSettings_sinjh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="size_down" parent="." instance=ExtResource("2_sse3l")]
+position = Vector2(214, 1278)
+rotation = -3.14159
+id = "arrow"
+
+[node name="size_up" parent="." instance=ExtResource("2_sse3l")]
+position = Vector2(573, 1278)
+id = "arrow"
+
+[node name="play" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = -168.0
+offset_right = 350.0
+offset_bottom = -57.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "Play"
+
+[node name="title" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -334.0
+offset_top = -168.0
+offset_right = -51.0
+offset_bottom = -57.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "Quit"
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="title" to="." method="_on_title_pressed"]

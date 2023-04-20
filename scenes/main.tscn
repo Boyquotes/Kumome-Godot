@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://tk4js1g1fjjb"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_2vbht"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 800.0
+offset_bottom = 1700.0
+mouse_filter = 2
+script = ExtResource("1_2vbht")

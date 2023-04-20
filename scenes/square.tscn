@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://lwsyjt7b0ht1"]
+
+[node name="square" type="ColorRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2

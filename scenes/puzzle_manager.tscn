@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://brmvq6r7h7qw0"]
+
+[ext_resource type="Script" path="res://scripts/puzzle_manager.gd" id="1_6klv1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_6klv1")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -265.0
+offset_top = -250.0
+offset_right = 272.0
+offset_bottom = -67.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 128
+text = "Play"
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://cefjqbmnol77o"]
+
+[ext_resource type="Script" path="res://scripts/avatar_instant.gd" id="1_gooyf"]
+[ext_resource type="Texture2D" uid="uid://bqjwdl75mwds5" path="res://imgs/king.png" id="2_h1x13"]
+[ext_resource type="Texture2D" uid="uid://dv44p164q4hgl" path="res://imgs/dead.png" id="3_lranf"]
+[ext_resource type="Texture2D" uid="uid://bemnyvprnr6ha" path="res://imgs/thinking.png" id="4_ir36q"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_gooyf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_h1x13")
+
+[node name="dead" type="Sprite2D" parent="."]
+texture = ExtResource("3_lranf")
+
+[node name="thinking" type="Sprite2D" parent="."]
+texture = ExtResource("4_ir36q")

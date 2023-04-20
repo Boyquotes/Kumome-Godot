@@ -1,0 +1,276 @@
+[gd_scene load_steps=6 format=3 uid="uid://dr3b0am5wh2kr"]
+
+[ext_resource type="Script" path="res://scripts/setup.gd" id="1_q3rjw"]
+[ext_resource type="Texture2D" uid="uid://chl18oqwq601t" path="res://imgs/busts.png" id="2_rb6xp"]
+[ext_resource type="Texture2D" uid="uid://d0yie3hoiccw5" path="res://imgs/spirit_animals.png" id="3_orp7b"]
+[ext_resource type="Texture2D" uid="uid://dh4eygqah85e0" path="res://imgs/arrow.png" id="4_io6w8"]
+[ext_resource type="PackedScene" uid="uid://djvv02f1regjv" path="res://scenes/opponent_editor.tscn" id="5_22wa2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_q3rjw")
+
+[node name="camera" type="Camera2D" parent="."]
+position = Vector2(400, 850)
+
+[node name="bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 1700.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.427451, 0.643137, 1, 1)
+metadata/_edit_lock_ = true
+
+[node name="bust" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(407, 527)
+texture = ExtResource("2_rb6xp")
+hframes = 4
+frame = 1
+
+[node name="dummy" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(1166, 529)
+texture = ExtResource("2_rb6xp")
+hframes = 4
+frame = 1
+
+[node name="spirit_animals" type="Node2D" parent="."]
+position = Vector2(400, 850)
+metadata/_edit_lock_ = true
+
+[node name="SpiritAnimals" type="Sprite2D" parent="spirit_animals"]
+position = Vector2(-298, -565)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_orp7b")
+hframes = 4
+
+[node name="SpiritAnimals2" type="Sprite2D" parent="spirit_animals"]
+position = Vector2(-346, -360)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_orp7b")
+hframes = 4
+
+[node name="SpiritAnimals3" type="Sprite2D" parent="spirit_animals"]
+position = Vector2(-388, -162)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_orp7b")
+hframes = 4
+
+[node name="SpiritAnimals4" type="Sprite2D" parent="spirit_animals"]
+position = Vector2(297, -565)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_orp7b")
+flip_h = true
+hframes = 4
+
+[node name="SpiritAnimals5" type="Sprite2D" parent="spirit_animals"]
+position = Vector2(364, -367)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_orp7b")
+flip_h = true
+hframes = 4
+
+[node name="SpiritAnimals6" type="Sprite2D" parent="spirit_animals"]
+position = Vector2(409, -158)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_orp7b")
+flip_h = true
+hframes = 4
+
+[node name="name_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_right = 276.0
+offset_bottom = 113.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 80
+text = "Name"
+horizontal_alignment = 1
+
+[node name="choose_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -798.0
+offset_right = 276.0
+offset_bottom = -685.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 64
+text = "Choose Your Character"
+horizontal_alignment = 1
+
+[node name="flavor_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -357.0
+offset_top = 224.0
+offset_right = 357.0
+offset_bottom = 528.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 64
+text = "(Flavor text describing some lore stuff for each character.)"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="flavor_label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -365.0
+offset_top = 1835.0
+offset_right = 349.0
+offset_bottom = 2045.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 48
+text = "(Don't worry about the dropdown menus being way too small. I'm working on it.)"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="right" type="Button" parent="."]
+layout_mode = 0
+offset_left = 572.0
+offset_top = 850.0
+offset_right = 836.0
+offset_bottom = 1114.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("4_io6w8")
+flat = true
+
+[node name="left" type="Button" parent="."]
+layout_mode = 0
+offset_left = 227.0
+offset_top = 982.0
+offset_right = 491.0
+offset_bottom = 1246.0
+rotation = 3.14159
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("4_io6w8")
+flat = true
+
+[node name="continue" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -306.0
+offset_top = -209.0
+offset_right = 306.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Continue"
+
+[node name="play" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -306.0
+offset_top = 1471.0
+offset_right = 306.0
+offset_bottom = 1616.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Play!"
+
+[node name="players" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 1767.0
+offset_right = 675.0
+offset_bottom = 2663.0
+
+[node name="player" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+player_name = "大肌肉"
+team = 0
+
+[node name="opp1" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+index = 2
+
+[node name="opp2" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+index = 3
+nature = 2
+team = 0
+
+[node name="opp3" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+index = 4
+nature = 2
+
+[node name="opp4" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+nature = 2
+team = 0
+
+[node name="opp5" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+nature = 2
+team = 0
+
+[node name="opp6" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+nature = 2
+team = 0
+
+[node name="opp7" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+nature = 2
+team = 0
+
+[node name="opp8" parent="players" instance=ExtResource("5_22wa2")]
+layout_mode = 2
+nature = 2
+team = 0
+
+[connection signal="pressed" from="right" to="." method="_on_right_pressed"]
+[connection signal="pressed" from="left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]

@@ -1,0 +1,289 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbp6y3lw4jkft"]
+
+[ext_resource type="Script" path="res://scripts/title.gd" id="1_2eygo"]
+[ext_resource type="Texture2D" uid="uid://c2ympgpywrdtr" path="res://imgs/title_complete.png" id="1_lxppb"]
+[ext_resource type="Texture2D" uid="uid://bsmrqwakoce8u" path="res://imgs/title_frames.png" id="2_f8vvg"]
+[ext_resource type="Texture2D" uid="uid://b5eywq4p6qlkl" path="res://imgs/title_line.png" id="3_36e2b"]
+[ext_resource type="Texture2D" uid="uid://t6td8hp7ks2l" path="res://imgs/the_rules_logo.png" id="5_v2g04"]
+
+[sub_resource type="Gradient" id="Gradient_8bdcg"]
+colors = PackedColorArray(0.427451, 0.643137, 1, 1, 0.561356, 0.243849, 0.49146, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ocln8"]
+gradient = SubResource("Gradient_8bdcg")
+fill_to = Vector2(0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_2eygo")
+metadata/_edit_lock_ = true
+
+[node name="camera" type="Camera2D" parent="."]
+position = Vector2(400, 850)
+
+[node name="bg_blue" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -800.0
+offset_top = -1700.0
+offset_right = 1600.0
+color = Color(0.427451, 0.643137, 1, 1)
+
+[node name="bg_gradient" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_right = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ocln8")
+
+[node name="title" type="Node2D" parent="."]
+position = Vector2(432, 408)
+
+[node name="TitleFrames" type="Sprite2D" parent="title"]
+position = Vector2(-281, 57)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_f8vvg")
+hframes = 6
+
+[node name="TitleFrames2" type="Sprite2D" parent="title"]
+position = Vector2(-201, 50)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_f8vvg")
+hframes = 6
+frame = 1
+
+[node name="TitleFrames3" type="Sprite2D" parent="title"]
+position = Vector2(-108, 33)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_f8vvg")
+hframes = 6
+frame = 2
+
+[node name="TitleFrames4" type="Sprite2D" parent="title"]
+position = Vector2(1, 30)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_f8vvg")
+hframes = 6
+frame = 3
+
+[node name="TitleFrames5" type="Sprite2D" parent="title"]
+position = Vector2(101, 47)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_f8vvg")
+hframes = 6
+frame = 4
+
+[node name="TitleFrames6" type="Sprite2D" parent="title"]
+position = Vector2(194, 40)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_f8vvg")
+hframes = 6
+frame = 5
+
+[node name="title_line" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 503.0
+offset_right = 984.0
+offset_bottom = 603.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_36e2b")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="title_reference" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(407, 470)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_lxppb")
+metadata/_edit_lock_ = true
+
+[node name="buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 503.0
+offset_right = 800.0
+offset_bottom = 1310.0
+mouse_filter = 2
+
+[node name="settings" type="Button" parent="buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 601.5
+offset_right = 274.0
+offset_bottom = 719.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Settings
+"
+
+[node name="credits" type="Button" parent="buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 436.5
+offset_right = 274.0
+offset_bottom = 554.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Credits"
+
+[node name="how_to" type="Button" parent="buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 264.5
+offset_right = 274.0
+offset_bottom = 382.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "How to Play"
+
+[node name="puzzles" type="Button" parent="buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 84.5
+offset_right = 274.0
+offset_bottom = 202.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Puzzles"
+
+[node name="play" type="Button" parent="buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = -94.5
+offset_right = 274.0
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Play Game"
+
+[node name="how_to" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -800.0
+offset_right = -15.0
+offset_bottom = 1700.0
+
+[node name="title" type="Sprite2D" parent="how_to"]
+texture_filter = 2
+position = Vector2(403, 191)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_v2g04")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="how_to"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -337.5
+offset_top = -418.0
+offset_right = 337.5
+offset_bottom = 523.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/italics_font_size = 48
+bbcode_enabled = true
+text = "During your turn, you must accomplish two actions:
+
+     1. Move your character to any unoccupied, adjacent square.
+     2. Place a mine on [i]any[/i] unoccupied square.
+
+If you are unable to move, your character falls, and you're out of the game!
+
+"
+
+[node name="got_it" type="Button" parent="how_to"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -216.0
+offset_right = 250.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 80
+text = "Got it!"
+
+[node name="credits" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 800.0
+offset_right = 1600.0
+offset_bottom = 1700.0
+
+[node name="got_it" type="Button" parent="credits"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -216.0
+offset_right = 250.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 80
+text = "Got it!"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="credits"]
+layout_mode = 0
+offset_left = 111.0
+offset_top = 476.0
+offset_right = 708.0
+offset_bottom = 1310.0
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[center]Pretend like there is something here"
+
+[connection signal="pressed" from="buttons/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="buttons/credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="buttons/how_to" to="." method="_on_how_to_pressed"]
+[connection signal="pressed" from="buttons/puzzles" to="." method="_on_puzzles_pressed"]
+[connection signal="pressed" from="buttons/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="how_to/got_it" to="." method="_on_got_it_pressed"]
+[connection signal="pressed" from="credits/got_it" to="." method="_on_got_it_pressed"]
