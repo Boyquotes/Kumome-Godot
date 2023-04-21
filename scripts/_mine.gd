@@ -10,3 +10,5 @@ var avatar = preload("res://scenes/avatar.tscn").instantiate()
 func _init():
 	avatar.texture = texture
 
+func destroy():
+	avatar.destroy()

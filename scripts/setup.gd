@@ -121,6 +121,7 @@ func _on_play_pressed():
 			])
 
 	#Array[B/L : String, avatar_id : AVATARS, team : int]
+	Global.adjust_setting('playing_with_cards', $with_cards.selected == 1)
 	var board = Global.generate_standard_board(players)
 	emit_signal('generated_level', board)
 	emit_signal("swapped_to", preload("res://scenes/play.tscn"))

@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://dljgpkqaq1330"]
+
+[ext_resource type="Texture2D" uid="uid://dxgyp2e42cpqm" path="res://imgs/happy.png" id="1_3n4of"]
+[ext_resource type="Script" path="res://scripts/hud_element_player.gd" id="2_ks2eo"]
+[ext_resource type="Texture2D" uid="uid://i2id3c0w68gi" path="res://imgs/star.png" id="3_djtru"]
+[ext_resource type="Texture2D" uid="uid://dv44p164q4hgl" path="res://imgs/dead.png" id="4_3mygr"]
+
+[node name="TextureRect" type="TextureRect"]
+custom_minimum_size = Vector2(180, 180)
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("1_3n4of")
+expand_mode = 1
+script = ExtResource("2_ks2eo")
+
+[node name="stars" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="stars"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_djtru")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="stars"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_djtru")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="stars"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_djtru")
+expand_mode = 1
+
+[node name="stuck" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_3mygr")
+expand_mode = 1

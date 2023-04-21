@@ -247,28 +247,41 @@ nature = 2
 
 [node name="opp4" parent="players" instance=ExtResource("5_22wa2")]
 layout_mode = 2
+index = 5
 nature = 2
-team = 0
+team = 2
 
 [node name="opp5" parent="players" instance=ExtResource("5_22wa2")]
 layout_mode = 2
+index = 6
 nature = 2
-team = 0
+team = 2
 
 [node name="opp6" parent="players" instance=ExtResource("5_22wa2")]
 layout_mode = 2
+index = 7
 nature = 2
-team = 0
+team = 3
 
 [node name="opp7" parent="players" instance=ExtResource("5_22wa2")]
 layout_mode = 2
+index = 8
 nature = 2
-team = 0
+team = 3
 
-[node name="opp8" parent="players" instance=ExtResource("5_22wa2")]
-layout_mode = 2
-nature = 2
-team = 0
+[node name="with_cards" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 2976.0
+offset_right = 731.0
+offset_bottom = 3072.0
+theme_override_font_sizes/font_size = 64
+item_count = 2
+selected = 0
+popup/item_0/text = "Play Without Cards"
+popup/item_0/id = 0
+popup/item_1/text = "Play With Cards"
+popup/item_1/id = 1
 
 [connection signal="pressed" from="right" to="." method="_on_right_pressed"]
 [connection signal="pressed" from="left" to="." method="_on_left_pressed"]

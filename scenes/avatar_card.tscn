@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5mxfcgqopnpc"]
+
+[ext_resource type="Script" path="res://scripts/avatar_card.gd" id="1_vsytk"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_vsytk")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 150.0
+offset_bottom = 200.0
+color = Color(0.131231, 0.572842, 0.913248, 1)
+
+[node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 14.0
+offset_right = 136.0
+offset_bottom = 191.0
+theme_override_font_sizes/font_size = 32
+text = "Move
++
+Mine"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

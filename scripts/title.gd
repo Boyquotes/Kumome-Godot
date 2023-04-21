@@ -4,8 +4,8 @@ func _ready():
 	for button in $buttons.get_children():
 		button.visible = false
 
-	play_buttons()
-	#play_intro()
+	#play_buttons()
+	play_intro()
 	play_rules()
 
 func play_intro():

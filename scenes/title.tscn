@@ -121,10 +121,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -274.0
-offset_top = 601.5
-offset_right = 274.0
-offset_bottom = 719.5
+offset_left = -280.0
+offset_top = 852.5
+offset_right = 268.0
+offset_bottom = 970.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 80
@@ -177,7 +177,7 @@ offset_bottom = 202.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 80
-text = "Puzzles"
+text = "Create Puzzle"
 
 [node name="play" type="Button" parent="buttons"]
 layout_mode = 1

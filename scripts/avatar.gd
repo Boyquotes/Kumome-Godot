@@ -32,6 +32,18 @@ func _ready():
 	tween.tween_property(self, 'scale', Vector2.ONE, 0.5).from(Vector2.ZERO)
 	tween.connect('finished', emit_signal.bind('finished'))
 
+func destroy():
+	print('good bye cruel world!')
+	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, 'rotation', 2*PI, 0.5)
+	tween.tween_property(self, 'scale', Vector2.ZERO, 0.5).from(Vector2.ONE)
+	tween.connect('finished', on_destroyed)
+
+func on_destroyed():
+	emit_signal('finished')
+	queue_free.call_deferred()
+	#tween.connect('finished', queue_free)
+
 func play_stuck():
 	$thinking.rotation = PI
 	var tween = create_tween()

@@ -8,6 +8,15 @@ enum AVATARS {
 	BEAR = 5, CHICKEN = 6, ELEPHANT = 7, OWL = 8, RHINO = 9, SNAKE = 10, MONKEY = 11, WALRUS = 12
 }
 
+var settings := {
+	playing_with_cards = false,
+	special_cards_per_game = 2
+}
+
+func adjust_setting(st, val):
+	assert(st in settings)
+	settings[st] = val
+
 func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dictionary:
 
 	var parse_header := true

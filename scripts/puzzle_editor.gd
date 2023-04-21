@@ -7,6 +7,7 @@ var avatars := {}
 var level_code : String : get = generate_code, set = set_code
 var _code : String
 
+
 func _ready():
 	for butt in $buttons.get_children():
 		butt.connect('touched', change_icon)
@@ -18,9 +19,10 @@ func _ready():
 
 	change_icon('player')
 
-	setup()
+	emit_signal('requested_level', setup)
 
-func setup():
+func setup(code):
+	_code = code
 	var data = Global.parse_code(_code, {})
 	if data.valid:
 		$board.dimensions = data.size
@@ -39,7 +41,7 @@ func setup():
 	else:
 		add_touch_spots()
 		add_avatars()
-		avatars[Vector2i.ZERO].id = 'player'
+		#avatars[Vector2i.ZERO].id = 'player'
 
 	_code = ''
 
@@ -51,7 +53,7 @@ func resize(_id, dir):
 	s = clampi(s + dir, 4, 10)
 	$board.dimensions = Vector2i(s, s)
 	$Label.text = str(s)
-	setup()
+	setup(_code)
 
 func change_icon(id : String):
 	active_id = id

@@ -4,6 +4,8 @@ class_name Game
 signal added_mine
 signal game_over
 signal phase_change
+signal turn_started
+signal commited_to_action
 
 enum PHASES {START, MOVE, PLACE, NO_PLACE, NONE}
 
@@ -73,6 +75,11 @@ func phase_move():
 	active_player.move()
 	write('\t%s is %sstuck' % [active_player, '' if active_player.stuck else 'not '])
 
+func phase_card():
+	write('\t-> card')
+	active_player.play_card()
+	write('\t%s is %sstuck' % [active_player, '' if active_player.stuck else 'not '])
+
 func phase_place():
 	write('\t-> place')
 	active_player.place()
@@ -85,6 +92,21 @@ func phase_none():
 	write('\t-> No action')
 
 func run():
+	while true:
+		get_next_active_player()
+		emit_signal('turn_started', active_player)
+		if game_is_over():
+			break
+		if is_active_player_stuck():
+			continue
+
+		phase_card()
+		await active_player.card_finished
+
+
+	emit_signal('game_over')
+
+func run_old():
 	while true:
 		write('Go to phase after', pretty(phase), active_player)
 		var links = phase_tree[phase]
@@ -219,12 +241,25 @@ func add_player(p : Player):
 	players.append(p)
 	p.game = self
 	p.avatar.size = board.square_size
+	p.connect('commited_to_action', emit_signal.bind('commited_to_action'))
 
 func add_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(Mine.new(), at, color)
 
 func add_instant_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(MineInstant.new(), at, color)
+
+func remove_mine_at(at : Vector2i) -> Array[Mine]:
+	print('look for mine at ', at)
+	var rv : Array[Mine] = []
+	for mine in mines:
+		if mine.location == at:
+			print('remove mine at ', at)
+			mine.destroy()
+			rv.append(mine)
+	for mine in rv:
+		mines.erase(mine)
+	return rv
 
 func add_any_mine_at(mine : Mine, at : Vector2i, color : Color) -> Mine:
 	mine.location = at
@@ -257,6 +292,13 @@ func get_opens() -> Array[Vector2i]:
 
 	for mine in mines:
 		rv.erase(mine.location)
+
+	return rv
+
+func get_mine_spots() -> Array[Vector2i]:
+	var rv : Array[Vector2i] = []
+	for mine in mines:
+		rv.append(mine.location)
 
 	return rv
 
