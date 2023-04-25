@@ -7,51 +7,16 @@ signal phase_change
 signal turn_started
 signal commited_to_action
 
-enum PHASES {START, MOVE, PLACE, NO_PLACE, NONE}
-
 var players : Array[Player] = []
 var mines : Array[Mine] = []
 var active_player : Player
 var active_team := -1
 var turn := 0
-var phase := PHASES.START
 var board : GameBoard
 var dimensions : Vector2i
-var message : String : get = get_message
 var verbose := false
 
-# Perhaps should convert these to a Phase classes
-var phase_tree := {
-	PHASES.START : {
-		PHASES.MOVE : null,
-	},
-	PHASES.MOVE : {
-		PHASES.NONE : game_is_over,
-		PHASES.NO_PLACE: is_active_player_stuck,
-		PHASES.PLACE : null
-	},
-	PHASES.PLACE : {
-		PHASES.MOVE : null
-	},
-	PHASES.NO_PLACE : {
-		PHASES.MOVE : null
-	},
-	PHASES.NONE : {
-		PHASES.NONE : null
-	}
-}
-
-var phase_callbacks := {
-	PHASES.START : phase_start,
-	PHASES.MOVE : phase_move,
-	PHASES.PLACE : phase_place,
-	PHASES.NO_PLACE: phase_none,
-	PHASES.NONE : phase_none
-}
-
 func _init(_board : GameBoard, dims := Vector2i.ZERO):
-	write("Let's play a game")
-	connect('tree_exiting', func(): write('Goodbye Cruel World!'))
 	board = _board
 
 	if dims == Vector2i.ZERO:
@@ -60,89 +25,31 @@ func _init(_board : GameBoard, dims := Vector2i.ZERO):
 		dimensions = dims
 		board.dimensions = dims
 
-
 func start():
-	phase = PHASES.START
 	run()
-	#next()
 
-func phase_start():
-	pass
-
-func phase_move():
-	write('\t-> move')
-	get_next_active_player()
-	active_player.move()
-	write('\t%s is %sstuck' % [active_player, '' if active_player.stuck else 'not '])
-
-func phase_card():
-	write('\t-> card')
-	active_player.play_card()
-	write('\t%s is %sstuck' % [active_player, '' if active_player.stuck else 'not '])
-
-func phase_place():
-	write('\t-> place')
-	active_player.place()
-
-func phase_end():
-	write('\t-> END')
-	emit_signal('game_over')
-
-func phase_none():
-	write('\t-> No action')
-
+# This is the heart of the game loop, as outlined in the first page of the design doc
 func run():
 	while true:
 		get_next_active_player()
+
+		# This signal tells UI elements to update
 		emit_signal('turn_started', active_player)
+
 		if game_is_over():
 			break
 		if is_active_player_stuck():
 			continue
 
-		phase_card()
+		# Hand control over to active_player and then wait until it emits the
+		# signal "card_finished"
+		active_player.play_card()
 		await active_player.card_finished
 
 
 	emit_signal('game_over')
 
-func run_old():
-	while true:
-		write('Go to phase after', pretty(phase), active_player)
-		var links = phase_tree[phase]
-		var callback : Callable
-		var patient := false
-
-		for next_phase in links:
-			if links[next_phase] == null:
-				phase = next_phase
-				callback = phase_callbacks[next_phase]
-				patient = true
-			elif links[next_phase].call():
-				phase = next_phase
-				callback = phase_none
-				break
-
-		write('\t->', pretty(phase), 'callback', patient)
-		callback.call()
-		write('\t->', pretty(phase), active_player)
-		emit_signal('phase_change')
-
-		if phase == PHASES.NONE:
-			break
-		elif patient:
-			write('\t-> waiting...')
-			await active_player.finished
-			write('\t-> ...finished!')
-
-	emit_signal('game_over')
-
-func pretty(ph : PHASES):
-	return PHASES.keys()[ph]
-
 func game_is_over() -> bool:
-	write('\t(game is %sover)' % ['' if len(get_active_teams()) < 2 else 'not '])
-
 	return len(get_active_teams()) < 2
 
 func get_winning_team() -> int:
@@ -161,6 +68,7 @@ func get_active_teams() -> Array[int]:
 
 	return active_teams
 
+# I think this method is kinda sloppy and potentially buggy.
 func get_next_active_player() -> void:
 	var teams := get_active_teams()
 	if active_team == -1:
@@ -193,47 +101,7 @@ func minimum(list : Array):
 			lowest = x
 	return lowest
 
-#	var player_index = players.find(active_player)
-#	while true:
-#		player_index += 1
-#		if player_index >= len(players):
-#			player_index = 0
-#
-#		var next_player = players[player_index]
-#		if active_player == next_player:
-#			return
-#		elif active_player.team == next_player.team:
-#			continue
-#		elif next_player.stuck:
-#			continue
-#		else:
-#			active_player = next_player
-#			return
-#	return
-
-func is_finished() -> bool:
-	var player_index = players.find(active_player)
-	while true:
-		player_index += 1
-		if player_index >= len(players):
-			player_index = 0
-
-		var next_player = players[player_index]
-		if active_player == next_player:
-			return true
-		elif active_player.team == next_player.team:
-			continue
-		elif next_player.stuck:
-			continue
-		else:
-			return false
-
-	return false
-
 func is_active_player_stuck() -> bool:
-	write('\t(check stuck %s)' % active_player)
-	if active_player.stuck:
-		write('\t\tNO PLACE FOR ', active_player)
 	return active_player.stuck
 
 func add_player(p : Player):
@@ -249,12 +117,12 @@ func add_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 func add_instant_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(MineInstant.new(), at, color)
 
+# If there is no mine at the requested location, return an empty array
+# If there is a mine at the requested location, return an array with the mine in it
 func remove_mine_at(at : Vector2i) -> Array[Mine]:
-	print('look for mine at ', at)
 	var rv : Array[Mine] = []
 	for mine in mines:
 		if mine.location == at:
-			print('remove mine at ', at)
 			mine.destroy()
 			rv.append(mine)
 	for mine in rv:
@@ -270,6 +138,7 @@ func add_any_mine_at(mine : Mine, at : Vector2i, color : Color) -> Mine:
 	emit_signal('added_mine', mine)
 	return mine
 
+# Is the requested point cluttered with mines/other players?
 func is_open(at : Vector2i):
 	for player in players:
 		if player.location == at:
@@ -281,6 +150,7 @@ func is_open(at : Vector2i):
 
 	return true
 
+# Get all uncluttered points
 func get_opens() -> Array[Vector2i]:
 	var rv : Array[Vector2i] = []
 	for i in dimensions.x:
@@ -295,25 +165,13 @@ func get_opens() -> Array[Vector2i]:
 
 	return rv
 
+# Get all points with a mine on them
 func get_mine_spots() -> Array[Vector2i]:
 	var rv : Array[Vector2i] = []
 	for mine in mines:
 		rv.append(mine.location)
 
 	return rv
-
-func write(a, b = '', c = '', d = ''):
-	if verbose:
-		prints(a, b, c, d)
-
-func get_message():
-	return {
-		PHASES.START : 'Move',
-		PHASES.MOVE : 'Move',
-		PHASES.PLACE : 'Place Mine',
-		PHASES.NO_PLACE: 'No Place',
-		PHASES.NONE: 'Game Over!!'
-	}[phase]
 
 func get_hypothetical() -> Hypothetical:
 	var hy := Hypothetical.new()

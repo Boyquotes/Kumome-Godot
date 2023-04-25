@@ -113,7 +113,6 @@ func _on_play_pressed():
 	for pl in $players.get_children():
 		var info = pl.get_data()
 		if info.nature:
-			print(info)
 			players.append([
 				info.nature,
 				data[active_character].avatar if info.player else Global.AVATARS.RANDOM,

@@ -1,5 +1,8 @@
 extends Node
 
+# This is an autoload, other languages call it a "singleton" Any method or value in this script
+# can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
+
 const board_4p := '........|........|........|...02...|...31...|........|........|........'
 const board_8p := '........|........|...56...|..2..0..|..1..3..|...74...|........|........'
 
@@ -17,6 +20,20 @@ func adjust_setting(st, val):
 	assert(st in settings)
 	settings[st] = val
 
+
+# Parses a given level_code and returns a dictionary with all the relevant data.
+# The details of the level_code spec can be found in "res://scripts/notes.gd". The parse_consturctoe_code dictionary
+# shoud be of the form: {
+#	'L' : method_that_processes_local_player(id : int, team : int, at : Vector2i),
+#	'B' : method_that_processes_ai_player(id : int, team : int, at : Vector2i),
+#	'R' : method_that_processes_remote_player(id : int, team : int, at : Vector2i),
+#	'I' : method_that_processes_ai_instant_player(id : int, team : int, at : Vector2i)
+# }, see "res://scripts/play.gd" for an example
+# The returned dictionary will be of the form: {
+#	size : Vector2i (size of the game board),
+#	map : Array (list of mine and player data),
+#	valid : bool (a flag indicating whether the level_code was legit or not)
+#}
 func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dictionary:
 
 	var parse_header := true
@@ -57,6 +74,7 @@ func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dic
 			size.x = max(size.x, len(line))
 	return {size = size, map = map, valid = true}
 
+# Useful for making a quick level_code for debugging purposes
 func generate_2p_level(p1 : String, p2 : String, size : int, starting_mines : bool) -> String:
 	var half := int(size/2)
 	var rv := ""
@@ -80,7 +98,10 @@ func generate_2p_level(p1 : String, p2 : String, size : int, starting_mines : bo
 
 	return rv
 
-## players = Array[B/L : String, avatar_id : AVATARS, team : int]
+# Generates a standard starting board based on the rules outlined in the Print and Play pages 2 and 3
+# the array players must be an array of arrays. Each sub-array is of the form:
+# [B/L/R/I : String, avatar_id : AVATARS, team : int]
+# Where B, L, R, I indicate AI, Local, Remote, and Instant respectivly
 func generate_standard_board(players : Array) -> String:
 	var rv := ''
 	var board_size : int

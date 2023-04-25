@@ -17,6 +17,10 @@ func card_override(c : Card):
 	clear_touch_spots()
 	super(c)
 
+# move(), place(), teleport(), and unmine() all work pretty much the same way: get a list of potential
+# points for touch_sports from game, throw out any point that isn't appropriate, change the phase (for
+# use later in on_touch_spot_touched()) and add the touch_spots to the board.
+
 func move():
 	avatar.thinking = true
 
@@ -68,7 +72,6 @@ func unmine():
 	phase = PHASE.UNMINE
 
 func perform_special_action(key : String, args = null):
-	print('special ', key)
 	if key == 'unmine':
 		unmine()
 	elif key == 'teleport':
@@ -76,8 +79,14 @@ func perform_special_action(key : String, args = null):
 	else:
 		super(key)
 
+# This method is called when a touch_spot emits the "touched" signal. It's now up to this class
+# to decide what to do
 func on_touch_spot_touched(at : Vector2i):
+	# This signal is to tell the UI to hide the cards; now that we've commited to whatever,
+	# we can't change our mind and play a different card.
 	emit_signal('commited_to_action')
+
+	# Not that we've toouched a spot, we can't touch another, so get rid of them!
 	clear_touch_spots()
 
 	if phase == PHASE.MOVE:
@@ -94,8 +103,10 @@ func clear_touch_spots():
 		var ts = touch_spots.pop_back()
 		ts.queue_free()
 
-func add_touch_spots(potentials):
-	for pot_spot in potentials:
+# The touch spots are the little targets that appear on the board and wait for player input.
+# They emit the signal "touched" when touched, and don't do much more than that.
+func add_touch_spots(spot_list):
+	for pot_spot in spot_list:
 		var touch_spot = preload("res://scenes/touch_spot.tscn").instantiate()
 		touch_spot.location = pot_spot
 		touch_spot.size = game.board.square_size

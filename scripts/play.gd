@@ -1,11 +1,17 @@
 extends SwapScene
 
+# This script does all the heavy lifting of connecting the game, the players, their avatars,
+# the board, and the ui. It doesn't handle any logic (see "res://scripts/_game.gd" for that).
+# This script is not properly commented because 1. I think it'll be completly rewritten at some point
+# and 2. every method does pretty much exactly what is says it does.
+
 @export_multiline var level_code : String
 @export var run_ai_test := 0
 
 var game : Game
 var win_record := {}
 
+# Hard coded for testing purposes. Obviously there's a better way to do it!
 var deck := [
 	preload("res://scripts/cards/teleport.gd").new(),
 	preload("res://scripts/cards/mine_mine.gd").new(),
@@ -13,13 +19,7 @@ var deck := [
 	preload("res://scripts/cards/unmine_move.gd").new(),
 ]
 
-
-
-
 func _ready():
-	print('play ready')
-	print(Global.settings)
-
 	add_cards()
 	space_cards()
 
@@ -32,9 +32,7 @@ func _ready():
 		create(level_code)
 
 func create(lc : String):
-	print('create')
 	level_code = lc
-	print(level_code)
 
 	clear_children([$avatars, $mines])
 
@@ -45,7 +43,7 @@ func create(lc : String):
 	})
 
 	game = Game.new($board, data.size)
-	#game.instant = run_ai_test
+
 	game.connect('added_mine', add_mine_to_tree)
 	game.connect('game_over', on_game_over)
 	game.connect('phase_change', update_ui)
@@ -71,7 +69,6 @@ func show_cards(b : bool):
 
 func update_ui():
 	$ui/player.texture = game.active_player.avatar.texture
-	$ui/action.text = '%s\n(team %s)' % [game.message, game.active_player.team]
 
 func create_local_player(id : int, team : int, at : Vector2i) -> PlayerHuman:
 	var player := PlayerHuman.new(id, team)
@@ -104,7 +101,6 @@ func place_player(player, at):
 	player.location = at
 	game.add_player(player)
 	player.avatar.position = $board.to_position(at)
-
 
 func add_mine_at(at : Vector2i):
 	game.add_mine_at(at)

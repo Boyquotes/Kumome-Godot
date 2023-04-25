@@ -1,6 +1,10 @@
 extends Player
 class_name PlayerAI
 
+
+# Get a list of potential spots from game, dicard any spot that isn't appropriate,
+# feed the list of remaining spots to pick_a_move_spot(), and then send the chosen spot
+# to the avatar (with a slight delay to give the impression of AI thinking)
 func move():
 	avatar.thinking = true
 	var potentials : Array[Vector2i] = []
@@ -14,10 +18,12 @@ func move():
 	else:
 		play_stuck()
 
+# Similar to move(), get a list of potential spots from game,
+# feed the list of spots to pick_a_mine_spot(), and then send the chosen spot
+# to the avatar (with a slight delay to give the impression of AI thinking)
 func place():
 	if stuck:
 		return cant_place()
-
 
 	avatar.thinking = true
 	var potentials : Array[Vector2i] = game.get_opens()
@@ -25,12 +31,16 @@ func place():
 
 	avatar.create_tween().tween_callback(place_at.bind(spot)).set_delay(0.5)
 
+# what_if_move() and what_if_mine() defer to the Hypothetical class to score a potential move
 func what_if_move(hyp : Hypothetical, from : Vector2i, to : Vector2i) -> int:
 	return hyp.what_if_move(from, to).score_for_team(team)
 
 func what_if_mine(hyp : Hypothetical, _from : Vector2i, at : Vector2i) -> int:
 	return hyp.what_if_mine(at).score_for_team(team)
 
+# Makes a list of all the best spots and then picks one at random. This class probably
+# shouldn't be called directly, instead it can be called indirectly via pick_a_move_spot()
+# or pick_a_mine_spot()
 func pick_a_spot(potentials : Array[Vector2i], scorer : Callable) -> Vector2i:
 	if len(potentials) == 0:
 		stuck = true

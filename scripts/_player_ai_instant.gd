@@ -1,6 +1,9 @@
 extends PlayerAI
 class_name PlayerAIInstant
 
+# This class is the same as PlayerAI but without all those pesky animations. It's good for testing
+# but isn't used for anything else.
+
 func add_avatar():
 	avatar = preload("res://scenes/avatar_instant.tscn").instantiate()
 	avatar.connect('finished', on_avatar_finished)
@@ -35,8 +38,6 @@ func move_to(to : Vector2i):
 
 	avatar.position = game.board.to_position(location)
 	emit_signal.call_deferred('finished')
-
-
 
 
 func place_at(at : Vector2i):

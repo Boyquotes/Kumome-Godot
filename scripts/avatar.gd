@@ -33,7 +33,6 @@ func _ready():
 	tween.connect('finished', emit_signal.bind('finished'))
 
 func destroy():
-	print('good bye cruel world!')
 	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_property(self, 'rotation', 2*PI, 0.5)
 	tween.tween_property(self, 'scale', Vector2.ZERO, 0.5).from(Vector2.ONE)

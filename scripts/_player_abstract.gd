@@ -1,6 +1,13 @@
 extends Node
 class_name Player
 
+# This class handles all the logic/decision making for any player (bot/local/remote)
+# It should be subclassed (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
+# It has an avatar which is the visual representation. Don't waste time looking at
+# "res://scripts/avatar.gd" just know that that class handles animations and whatnot and emits
+# the "finished" signal when it's done animating
+
+
 signal finished
 signal card_finished
 signal commited_to_action
@@ -24,6 +31,7 @@ func _init(_theme : Global.AVATARS, _team : int):
 	theme = _theme
 	set_theme()
 
+# I'm ashamed of what I've done here.
 func set_theme():
 	match theme:
 		Global.AVATARS.RED:
@@ -74,35 +82,44 @@ func add_card(c : Card):
 	card = c
 	card.connect('finished', emit_signal.bind('card_finished'))
 
+# By default, play the card move/mine
 func play_card():
 	add_card(preload("res://scripts/cards/move_mine.gd").new())
 	card.act(self)
 
+# Allows you to override the played card so that when you start your turn with play_card(), you
+# can then play a different card (e.g. teleport). The UI prevents this from being called by a
+# local player at an inappropriate time, but I think that might be error prone.
 func card_override(c : Card):
 	special_cards_count += 1
 	card.queue_free()
 	add_card(c)
 	card.act(self)
 
+# Called to tell the class to begin the move process.
+# Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func move():
 	pass
 
+# Called when a move decision has actually been made by the subclass
 func move_to(to : Vector2i):
 	turns += 1
 	avatar.thinking = false
 	location = to
 	avatar.move_to(game.board.to_position(location), emit_signal.bind('finished'))
 
+# Called to tell the class to begin the mine placing process
+# Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func place():
 	pass
 
+# Called when a mine placing decision has actually been made by the subclass
 func place_at(at : Vector2i):
 	avatar.thinking = false
 	var mine := game.add_mine_at(at, color)
 	mine.avatar.connect('finished', emit_signal.bind('finished'))
 
 func remove_mine_at(at : Vector2i):
-
 	avatar.thinking = false
 	var mine_maybe : Array[Mine] = game.remove_mine_at(at)
 	if len(mine_maybe):
@@ -112,8 +129,9 @@ func remove_mine_at(at : Vector2i):
 	else:
 		emit_signal.call_deferred('finished')
 
+# Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func perform_special_action(action_key : String, extra_args = null):
-	prints(self, 'can not perform special action', action_key)
+	push_warning(self, 'can not perform special action', action_key)
 	emit_signal.call_deferred('finished')
 
 func cant_place():
@@ -129,6 +147,7 @@ func play_stuck():
 	#emit_signal('got_stuck')
 	avatar.play_stuck()
 
+# Useful for debugging purposes
 func _to_string():
 	return {
 		Global.AVATARS.RED : 'Red Lightning',
