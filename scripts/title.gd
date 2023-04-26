@@ -85,3 +85,8 @@ func _on_got_it_pressed():
 
 func _on_puzzles_pressed():
 	goto_puzzle_editor()
+
+
+func _on_log_out_pressed():
+	Global.log_out()
+	swap_to_scene(preload("res://scenes/log_in.tscn"))

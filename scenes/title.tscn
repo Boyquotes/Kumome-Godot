@@ -279,6 +279,22 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 80
 text = "Got it!"
 
+[node name="log_out" type="Button" parent="credits"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -234.0
+offset_top = -1604.0
+offset_right = 266.0
+offset_bottom = -1486.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 80
+text = "Log Out"
+
 [node name="RichTextLabel" type="RichTextLabel" parent="credits"]
 layout_mode = 0
 offset_left = 111.0
@@ -296,3 +312,4 @@ text = "[center]Pretend like there is something here"
 [connection signal="pressed" from="buttons/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="how_to/got_it" to="." method="_on_got_it_pressed"]
 [connection signal="pressed" from="credits/got_it" to="." method="_on_got_it_pressed"]
+[connection signal="pressed" from="credits/log_out" to="." method="_on_log_out_pressed"]

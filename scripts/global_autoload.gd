@@ -34,9 +34,15 @@ func adjust_setting(st, val):
 	settings[st] = val
 
 func log_in(user : Dictionary):
-	print(user)
 	active_user.logged_in = true
 	#active_user.username = user.username
+	save_user()
+
+func log_out():
+	active_user = {logged_in = false}
+	save_user()
+
+func save_user():
 	var file = FileAccess.open(USER_PATH, FileAccess.WRITE)
 	file.store_var(active_user)
 
