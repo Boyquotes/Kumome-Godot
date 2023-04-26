@@ -18,3 +18,12 @@ func goto(pos : Vector2, callback := none):
 		.set_trans(Tween.TRANS_CUBIC)
 		.set_ease(Tween.EASE_IN_OUT)
 	).connect('finished', callback)
+
+func swap_to_scene(ps : PackedScene):
+	emit_signal("swapped_to", ps)
+
+func post(data : Dictionary, endpoint : String):
+	var json = JSON.stringify(data)
+	var header = ['Content-Type: application/json']
+	$hold_on.visible = true
+	$HTTPRequest.request(Global.url + endpoint, header, HTTPClient.METHOD_POST, json)

@@ -5,7 +5,12 @@ var saved_level : String
 var quit_to : PackedScene = preload("res://scenes/title.tscn")
 
 func _ready():
-	swap_to_scene(preload("res://scenes/title.tscn"))
+	await get_tree().process_frame
+
+	if Global.active_user.logged_in:
+		swap_to_scene(preload("res://scenes/title.tscn"))
+	else:
+		swap_to_scene(preload("res://scenes/create_account.tscn"))
 
 func swap_to_scene(scene : PackedScene):
 	if active_scene != null:

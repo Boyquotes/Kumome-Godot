@@ -53,5 +53,5 @@ func refresh():
 	$nature.visible = player_name == ''
 
 
-func _on_nature_item_selected(index):
-	$team.disabled = index == 2
+func _on_nature_item_selected(i):
+	$team.disabled = i == 2

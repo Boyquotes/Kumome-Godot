@@ -9,7 +9,7 @@ signal finished
 var title : String
 
 # Override this in the subclass to give functionality
-func act(pl : Player):
+func act(_pl : Player):
 	emit_signal('finished')
 
 # Useful to the subclass when overriding act()

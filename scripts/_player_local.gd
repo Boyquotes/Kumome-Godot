@@ -71,7 +71,7 @@ func unmine():
 
 	phase = PHASE.UNMINE
 
-func perform_special_action(key : String, args = null):
+func perform_special_action(key : String, _args = null):
 	if key == 'unmine':
 		unmine()
 	elif key == 'teleport':

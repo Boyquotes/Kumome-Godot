@@ -1,0 +1,122 @@
+[gd_scene load_steps=2 format=3 uid="uid://corgps1eopgd7"]
+
+[ext_resource type="Script" path="res://scripts/log_in.gd" id="1_fcvna"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fcvna")
+endpoint = "/user/signin"
+
+[node name="center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vbox" type="VBoxContainer" parent="center"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="center/vbox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Email"
+vertical_alignment = 2
+
+[node name="email" type="LineEdit" parent="center/vbox"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "fake@email.com"
+
+[node name="Label2" type="Label" parent="center/vbox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Password
+"
+vertical_alignment = 2
+
+[node name="password" type="LineEdit" parent="center/vbox"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "PASSWORD!01aaa"
+
+[node name="HSeparator" type="HSeparator" parent="center/vbox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="log_in" type="Button" parent="center/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Log In"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="create_an_account" type="Button" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+offset_left = 273.0
+offset_top = 30.0
+offset_right = 773.0
+offset_bottom = 105.0
+theme_override_font_sizes/font_size = 48
+text = "Create an Account"
+flat = true
+
+[node name="error" type="Control" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.324
+offset_top = 152.0
+offset_bottom = -0.799988
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="msg" type="Label" parent="error"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Label"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hold_on" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="hold_on"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="hold_on/CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Logging in..."
+
+[connection signal="pressed" from="center/vbox/log_in" to="." method="_on_log_in_pressed"]
+[connection signal="pressed" from="create_an_account" to="." method="_on_create_an_account_pressed"]

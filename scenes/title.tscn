@@ -44,6 +44,15 @@ offset_right = 800.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_ocln8")
+metadata/_edit_lock_ = true
+
+[node name="username" type="Label" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 21.0
+offset_right = 257.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 48
 
 [node name="title" type="Node2D" parent="."]
 position = Vector2(432, 408)

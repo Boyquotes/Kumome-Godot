@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://dr3b0am5wh2kr"]
+[gd_scene load_steps=5 format=3 uid="uid://dr3b0am5wh2kr"]
 
-[ext_resource type="Script" path="res://scripts/setup.gd" id="1_q3rjw"]
 [ext_resource type="Texture2D" uid="uid://chl18oqwq601t" path="res://imgs/busts.png" id="2_rb6xp"]
 [ext_resource type="Texture2D" uid="uid://d0yie3hoiccw5" path="res://imgs/spirit_animals.png" id="3_orp7b"]
 [ext_resource type="Texture2D" uid="uid://dh4eygqah85e0" path="res://imgs/arrow.png" id="4_io6w8"]
@@ -14,7 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_q3rjw")
 
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2(400, 850)

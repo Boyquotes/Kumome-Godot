@@ -14,7 +14,7 @@ var active_team := -1
 var turn := 0
 var board : GameBoard
 var dimensions : Vector2i
-var verbose := false
+var verbose : bool = false
 
 func _init(_board : GameBoard, dims := Vector2i.ZERO):
 	board = _board

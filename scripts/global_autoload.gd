@@ -3,12 +3,20 @@ extends Node
 # This is an autoload, other languages call it a "singleton" Any method or value in this script
 # can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
 
+const url := 'http://localhost:3001'
+
 const board_4p := '........|........|........|...02...|...31...|........|........|........'
 const board_8p := '........|........|...56...|..2..0..|..1..3..|...74...|........|........'
+
+const USER_PATH = 'user://active_user.data'
 
 enum AVATARS {
 	RANDOM = -1, RED = 0, YELLOW = 1, BLACK = 2, WHITE = 3, BOT = 4,
 	BEAR = 5, CHICKEN = 6, ELEPHANT = 7, OWL = 8, RHINO = 9, SNAKE = 10, MONKEY = 11, WALRUS = 12
+}
+
+var active_user := {
+	logged_in = false
 }
 
 var settings := {
@@ -16,10 +24,21 @@ var settings := {
 	special_cards_per_game = 2
 }
 
+func _ready():
+	if FileAccess.file_exists(USER_PATH):
+		var file = FileAccess.open(USER_PATH, FileAccess.READ)
+		active_user = file.get_var()
+
 func adjust_setting(st, val):
 	assert(st in settings)
 	settings[st] = val
 
+func log_in(user : Dictionary):
+	print(user)
+	active_user.logged_in = true
+	#active_user.username = user.username
+	var file = FileAccess.open(USER_PATH, FileAccess.WRITE)
+	file.store_var(active_user)
 
 # Parses a given level_code and returns a dictionary with all the relevant data.
 # The details of the level_code spec can be found in "res://scripts/notes.gd". The parse_consturctoe_code dictionary
@@ -76,7 +95,7 @@ func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dic
 
 # Useful for making a quick level_code for debugging purposes
 func generate_2p_level(p1 : String, p2 : String, size : int, starting_mines : bool) -> String:
-	var half := int(size/2)
+	var half := int(size/2.0)
 	var rv := ""
 	rv += '%s 0 0\n' % p1
 	rv += '%s 1 1\n' % p2

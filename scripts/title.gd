@@ -8,6 +8,8 @@ func _ready():
 	play_intro()
 	play_rules()
 
+	$username.text = Global.active_user.get('username', '')
+
 func play_intro():
 
 	var tween := create_tween().set_parallel()
