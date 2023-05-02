@@ -21,17 +21,6 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_101pm")
 script = ExtResource("1_n8fwg")
-level_code = "L 0 0
-B 1 1
-B 2 2
-B 3 3
--
-......
-......
-..02..
-..31..
-......
-......"
 
 [node name="bg" type="ColorRect" parent="."]
 z_index = -2

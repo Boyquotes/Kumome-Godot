@@ -5,7 +5,7 @@ extends SwapScene
 # This script is not properly commented because 1. I think it'll be completly rewritten at some point
 # and 2. every method does pretty much exactly what is says it does.
 
-@export_multiline var level_code : String
+var level_code : String
 @export var run_ai_test := 0
 
 var game : Game
@@ -16,8 +16,12 @@ var deck : Array[Card] = []
 
 func _ready():
 
-	var first_card = 9+4
-	for i in range(first_card, first_card + 4):
+	#########################################################
+	# Yannis: You can change this line:
+	var card_indices := [1, 2, 3, 4]
+	##########################################################
+
+	for i in card_indices:
 		deck.append(Global.get_card(i))
 
 	add_cards()
