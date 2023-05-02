@@ -8,27 +8,31 @@ signal finished
 signal selected
 
 
-
-var ACTIONS := {
-	MOVE = preload("res://scripts/actions/move.gd"),
-	MINE = preload("res://scripts/actions/mine.gd"),
-	UNMINE = preload("res://scripts/actions/unmine.gd"),
-	TELEPORT = preload("res://scripts/actions/teleport.gd")
+var actions := {
+	move = preload("res://scripts/actions/move.gd"),
+	mine = preload("res://scripts/actions/mine.gd"),
+	unmine = preload("res://scripts/actions/unmine.gd"),
+	teleport = preload("res://scripts/actions/teleport.gd"),
+	target = preload("res://scripts/actions/target.gd"),
+	charge = preload("res://scripts/actions/charge.gd"),
+	not_implemented = preload("res://scripts/actions/not_implemented.gd")
 }
 
 var queue : Array[Action] = []
 var id := randi() % 1000
 var avatar : Control
 var cost : int = 2
+var data : Dictionary
 
-func _init():
-	add_actions()
+
+func _init(_data : Dictionary):
+	data = _data
+	cost = data.cost
+	for i in range(1, 4):
+		var a = data.get('action_%s' % i, '_')
+		var m = data.get('modifier_%s' % i, '_')
+		add_action(a, m)
 	create_avatar()
-
-# Must be overridden by a subclass
-func add_actions():
-	assert(false, 'Must be overridden!')
-
 
 func create_avatar():
 	avatar = preload("res://scenes/avatar_card.tscn").instantiate()
@@ -52,5 +56,8 @@ func discard():
 	queue_free()
 	return
 
-func add_action(a : Script):
-	queue.append(a.new())
+func add_action(a : String, m : String):
+	if a == '_': return
+	var action : Action = actions.get(a, actions.not_implemented).new(a, m)
+
+	queue.append(action)

@@ -139,7 +139,8 @@ func add_any_mine_at(mine : Mine, at : Vector2i, color : Color) -> Mine:
 	return mine
 
 # Is the requested point cluttered with mines/other players?
-func is_open(at : Vector2i):
+func is_open(at : Vector2i) -> bool:
+
 	for player in players:
 		if player.location == at:
 			return false
@@ -148,7 +149,10 @@ func is_open(at : Vector2i):
 		if mine.location == at:
 			return false
 
-	return true
+	return is_valid_spot(at)
+
+func is_valid_spot(at : Vector2i) -> bool:
+	return at.x >= 0 and at.y >= 0 and at.x < dimensions.x and at.y < dimensions.y
 
 # Get all uncluttered points
 func get_opens() -> Array[Vector2i]:
@@ -165,11 +169,58 @@ func get_opens() -> Array[Vector2i]:
 
 	return rv
 
+func get_ray(point : Vector2i, dir : Vector2i, walls : Array[Vector2i] = get_player_spots()) -> Array[Vector2i]:
+	var rv : Array[Vector2i] = []
+
+	while is_valid_spot(point) and not point in walls:
+		rv.append(point)
+		point += dir
+
+	return rv
+
+func get_edge_spots() -> Array[Vector2i]:
+	var rv : Array[Vector2i] = []
+
+	for i in dimensions.x:
+		var a = Vector2i(i, 0)
+		var b = Vector2i(i, dimensions.y - 1)
+		if is_open(a) and not a in rv:
+			rv.append(a)
+		if is_open(b) and not b in rv:
+			rv.append(b)
+
+	for j in dimensions.y:
+		var a = Vector2i(0, j)
+		var b = Vector2i(dimensions.x - 1, j)
+		if is_open(a) and not a in rv:
+			rv.append(a)
+		if is_open(b) and not b in rv:
+			rv.append(b)
+
+	return rv
+
+func get_spots_adjacent_to_players(list : Array[Player]) -> Array[Vector2i]:
+	var rv : Array[Vector2i] = []
+	var opens = get_opens()
+	for m in opens:
+		for p in list:
+			if abs(m.x - p.location.x) <= 1 and abs(m.y - p.location.y) <= 1 and not m in rv:
+				rv.append(m)
+
+	return rv
+
 # Get all points with a mine on them
 func get_mine_spots() -> Array[Vector2i]:
 	var rv : Array[Vector2i] = []
 	for mine in mines:
 		rv.append(mine.location)
+
+	return rv
+
+func get_player_spots() -> Array[Vector2i]:
+	var rv : Array[Vector2i] = []
+	for player in players:
+		rv.append(player.location)
 
 	return rv
 

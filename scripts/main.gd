@@ -1,7 +1,9 @@
 extends Control
 
+
+@export_multiline var saved_level : String
+@export var instant_play : bool
 var active_scene : SwapScene
-var saved_level : String
 var quit_to : PackedScene = preload("res://scenes/title.tscn")
 
 @onready var settings = $CanvasLayer/settings
@@ -10,8 +12,9 @@ var quit_to : PackedScene = preload("res://scenes/title.tscn")
 func _ready():
 	await get_tree().process_frame
 
-	if Global.active_user.logged_in:
-		print(Global.active_user)
+	if instant_play:
+		swap_to_scene(preload("res://scenes/play.tscn"))
+	elif Global.active_user.logged_in:
 		swap_to_scene(preload("res://scenes/title.tscn"))
 	else:
 		swap_to_scene(preload("res://scenes/create_account.tscn"))

@@ -12,6 +12,10 @@ offset_right = 192.0
 offset_bottom = 288.0
 theme = ExtResource("1_3yxav")
 script = ExtResource("2_g1fh3")
+title = "Title"
+short_description = "[b]bold[/b]
+[i]italics[/i]"
+export = "{ \"art\": \"res://imgs/card_art/placeholder.png\", \"title\": \"Title\", \"cost\": 1, \"short_description\": \"[b]bold[/b]\\n[i]italics[/i]\", \"long_description\": \"\", \"notes\": \"\" }"
 
 [node name="title" type="Label" parent="."]
 layout_mode = 1
@@ -27,7 +31,7 @@ offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
-text = "Super Swap!"
+text = "Title"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -56,16 +60,15 @@ offset_top = 0.095993
 offset_right = -7.936
 offset_bottom = 0.0639954
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 16
-theme_override_font_sizes/bold_font_size = 16
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/bold_italics_font_size = 16
-theme_override_font_sizes/mono_font_size = 16
+theme_override_constants/line_separation = -6
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
 bbcode_enabled = true
-text = "Swap positions with another player
-[b]bold[/b]
-[i]italics[/i]
-[b][i]bold italics[/i][/b]"
+text = "[b]bold[/b]
+[i]italics[/i]"
 
 [node name="art" type="TextureRect" parent="."]
 layout_mode = 1

@@ -50,6 +50,11 @@
 					"typeStr": "6:Modifiers",
 					"name": "modifier_3",
 					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Notes",
+					"display": null
 				}
 			],
 			"lines": [
@@ -63,7 +68,8 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Double Step",
@@ -75,7 +81,8 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Double Mine",
@@ -87,11 +94,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Pickup the trash",
-					"cost": 2,
+					"cost": 1,
 					"description": "move and remove a mine",
 					"action_1": "move",
 					"modifier_1": "_",
@@ -99,11 +107,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Beam me Up",
-					"cost": 2,
+					"cost": 1,
 					"description": "teleport to any square",
 					"action_1": "target",
 					"modifier_1": "SELF",
@@ -111,11 +120,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Escape Plan",
-					"cost": 2,
+					"cost": 1,
 					"description": "remove a mine then move",
 					"action_1": "unmine",
 					"modifier_1": "_",
@@ -123,23 +133,25 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "I love you",
-					"cost": 3,
+					"cost": 1,
 					"description": "teleport to a square adjacent to another player",
 					"action_1": "target",
 					"modifier_1": "SELF",
 					"action_2": "teleport",
-					"modifier_2": "PLAYER",
+					"modifier_2": "OTHER",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Bubble",
-					"cost": 2,
+					"cost": 1,
 					"description": "move a mine anywhere on the board",
 					"action_1": "unmine",
 					"modifier_1": "_",
@@ -147,11 +159,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge North",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "N",
@@ -159,11 +172,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge South",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "S",
@@ -171,11 +185,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge West",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "W",
@@ -183,11 +198,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge East",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "E",
@@ -195,11 +211,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge North West",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "NW",
@@ -207,11 +224,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge North East",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "NE",
@@ -219,11 +237,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge South West",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "SW",
@@ -231,11 +250,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Charge South East",
-					"cost": 2,
+					"cost": 1,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "SE",
@@ -243,11 +263,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Life on the edge",
-					"cost": 2,
+					"cost": 1,
 					"description": "Teleport to a square on the edge of the board",
 					"action_1": "target",
 					"modifier_1": "SELF",
@@ -255,47 +276,51 @@
 					"modifier_2": "EDGE",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Roll the dice",
-					"cost": 2,
+					"cost": 1,
 					"description": "Teleport to a random square",
 					"action_1": "target",
-					"modifier_1": "PLAYER",
+					"modifier_1": "SELF",
 					"action_2": "teleport",
 					"modifier_2": "RANDOM",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "You love me",
-					"cost": 3,
+					"cost": 1,
 					"description": "Teleport target to an adjacent square",
 					"action_1": "target",
-					"modifier_1": "PLAYER",
+					"modifier_1": "OTHER",
 					"action_2": "teleport",
 					"modifier_2": "SELF",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Targeted Roll the Dice",
-					"cost": 3,
+					"cost": 1,
 					"description": "Teleport target to a random square",
 					"action_1": "target",
-					"modifier_1": "PLAYER",
+					"modifier_1": "OTHER",
 					"action_2": "teleport",
 					"modifier_2": "RANDOM",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Mine swap",
-					"cost": 2,
+					"cost": 1,
 					"description": "Swap places with a mine",
 					"action_1": "swap",
 					"modifier_1": "MINE",
@@ -303,23 +328,25 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Wife swap",
-					"cost": 3,
+					"cost": 1,
 					"description": "Swap places with another player",
 					"action_1": "swap",
-					"modifier_1": "PLAYER",
+					"modifier_1": "OTHER",
 					"action_2": "_",
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Turn invisible",
-					"cost": 3,
+					"cost": 1,
 					"description": "Other players can't see you",
 					"action_1": "invisible",
 					"modifier_1": "FOREVER",
@@ -327,11 +354,12 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				},
 				{
 					"title": "Fog of War",
-					"cost": 3,
+					"cost": 1,
 					"description": "A heavy fog obscures your enemies' boards",
 					"action_1": "darkness",
 					"modifier_1": "FOREVER",
@@ -339,7 +367,8 @@
 					"modifier_2": "_",
 					"action_3": "_",
 					"modifier_3": "_",
-					"active": true
+					"active": true,
+					"Notes": ""
 				}
 			],
 			"separators": [],
@@ -501,7 +530,7 @@
 				},
 				{
 					"name": "PLAYER",
-					"notes": "Any player, use ALLY or ENEMY if you need specificity"
+					"notes": "Any player, use ALLY, ENEMY, or OTHER if you need specificity"
 				},
 				{
 					"name": "EMPTY",
@@ -542,6 +571,10 @@
 				{
 					"name": "FOREVER",
 					"notes": ""
+				},
+				{
+					"name": "OTHER",
+					"notes": "Any player other than yourself"
 				}
 			],
 			"separators": [],

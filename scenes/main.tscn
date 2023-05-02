@@ -10,6 +10,18 @@ offset_right = 800.0
 offset_bottom = 1700.0
 mouse_filter = 2
 script = ExtResource("1_2vbht")
+saved_level = "L 0 0
+B 1 1
+B 2 2
+B 3 3
+-
+......
+..x...
+...x..
+..x1..
+..0...
+......"
+instant_play = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

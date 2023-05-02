@@ -20,7 +20,7 @@ var active_user := {
 }
 
 var settings := {
-	playing_with_cards = false,
+	playing_with_cards = true,
 	special_cards_per_game = 2
 }
 
@@ -31,16 +31,16 @@ func _ready():
 		var file = FileAccess.open(USER_PATH, FileAccess.READ)
 		active_user = file.get_var()
 
-	var cards = get_data('Cards')
-	for card in cards:
-		print(card.title)
+func get_card(n : int) -> Card:
+	return Card.new(get_data('Cards')[n])
 
 func get_data(sheet_name : String) -> Array[Dictionary]:
 	var rv : Array[Dictionary] = []
 	for sheet in data.sheets:
 		if sheet.name == sheet_name:
 			for line in sheet.lines:
-				rv.append(line)
+				if line.active:
+					rv.append(line)
 			break
 
 	return rv
@@ -99,12 +99,12 @@ func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dic
 			for i in len(line):
 				var c = line[i]
 				if c.is_valid_int():
-					var data = key[c.to_int()]
+					var dict = key[c.to_int()]
 					map.append({
 						player = true,
-						constructor = data[0],
-						color = data[1],
-						team = data[2],
+						constructor = dict[0],
+						color = dict[1],
+						team = dict[2],
 						loc = Vector2i(i, size.y)
 					})
 				elif c == 'x':

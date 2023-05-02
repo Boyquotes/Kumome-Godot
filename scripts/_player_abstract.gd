@@ -85,7 +85,7 @@ func add_card(c : Card):
 # By default, play the card move/mine
 func play_card():
 	mana += 1
-	add_card(preload("res://scripts/cards/move_mine.gd").new())
+	add_card(Global.get_card(0))
 	card.act(self)
 
 # Allows you to override the played card so that when you start your turn with play_card(), you

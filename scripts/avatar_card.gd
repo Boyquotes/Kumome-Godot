@@ -46,25 +46,13 @@ func _ready():
 		refresh()
 
 func init(card : Card):
-	var titles := []
-	for action in card.queue:
-		titles.append(action.title)
-
-	if len(titles) == 1:
-		$title.text = titles[0]
-	elif len(titles) == 2 and titles[0] == titles[1]:
-		$title.text = '%s x 2' % titles[0]
-	elif len(titles) == 2:
-		$title.text = '%s + %s' % titles
-	elif  len(titles) == 3:
-		$title.text = '%s %s %s' % titles
-	else:
-		$title.text = '?'
+	title = card.data.title
+	cost = card.data.cost
+	short_description = card.data.description
 
 func refresh():
 	if not is_inside_tree(): return
 
-	print(title)
 
 	$title.text = title
 	$description.text = short_description
@@ -83,7 +71,7 @@ func refresh():
 
 func display(b : bool):
 	active = b
-	modulate.a = 1 if b else 0.5
+	modulate.a = 1.0 if b else 0.5
 
 func _on_button_pressed():
 	if not active: return

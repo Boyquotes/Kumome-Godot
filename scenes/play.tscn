@@ -158,4 +158,12 @@ vertical_alignment = 1
 [node name="cards" type="Node2D" parent="."]
 position = Vector2(0, 1188)
 
+[node name="mana" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 1123.0
+offset_right = 50.0
+offset_bottom = 1184.0
+text = "mana: 3"
+
 [connection signal="pressed" from="ui/quit" to="." method="_on_quit_pressed"]

@@ -12,14 +12,14 @@ var game : Game
 var win_record := {}
 
 # Hard coded for testing purposes. Obviously there's a better way to do it!
-var deck := [
-	preload("res://scripts/cards/teleport.gd").new(),
-	preload("res://scripts/cards/mine_mine.gd").new(),
-	preload("res://scripts/cards/move_move.gd").new(),
-	preload("res://scripts/cards/unmine_move.gd").new(),
-]
+var deck : Array[Card] = []
 
 func _ready():
+
+	var first_card = 9+4
+	for i in range(first_card, first_card + 4):
+		deck.append(Global.get_card(i))
+
 	add_cards()
 	space_cards()
 
@@ -62,8 +62,17 @@ func create(lc : String):
 func on_turn_start(player : Player):
 	space_cards()
 	show_cards(player is PlayerHuman)
+	update_mana()
+
+func update_mana():
+	if not game.active_player is PlayerHuman:
+		return
+
+	await get_tree().process_frame
+	$mana.text = 'Mana: %s' % game.active_player.mana
 
 func show_cards(b : bool):
+
 	for ca in $cards.get_children():
 		ca.display(b and Global.settings.playing_with_cards)
 
@@ -133,6 +142,7 @@ func add_cards():
 func on_card_selected(card : Card):
 	var can_afford = game.active_player.card_override(card)
 	if can_afford:
+		update_mana()
 		card.avatar.queue_free()
 		show_cards(false)
 
