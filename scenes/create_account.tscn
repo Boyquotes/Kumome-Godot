@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://wxtaa8sbfa45"]
+[gd_scene load_steps=3 format=3 uid="uid://wxtaa8sbfa45"]
 
 [ext_resource type="Script" path="res://scripts/server_test.gd" id="1_jtybj"]
+[ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_n4og0"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -9,8 +10,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_n4og0")
 script = ExtResource("1_jtybj")
 endpoint = "/user/signup"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.470588, 0.45098, 0.584314, 1)
 
 [node name="log_in" type="Button" parent="."]
 layout_mode = 2
@@ -39,33 +50,28 @@ layout_mode = 2
 [node name="Label3" type="Label" parent="center/vbox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Email"
 vertical_alignment = 2
 
 [node name="email" type="LineEdit" parent="center/vbox"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "fake@email.com"
 
 [node name="Label" type="Label" parent="center/vbox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Username"
 vertical_alignment = 2
 
 [node name="username" type="LineEdit" parent="center/vbox"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "CoolUser"
 
 [node name="Label2" type="Label" parent="center/vbox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Password
 "
 vertical_alignment = 2
@@ -73,16 +79,15 @@ vertical_alignment = 2
 [node name="password" type="LineEdit" parent="center/vbox"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "PASSWORD!01aaa"
 
 [node name="HSeparator" type="HSeparator" parent="center/vbox"]
+modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(20, 100)
 layout_mode = 2
 
 [node name="submit" type="Button" parent="center/vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Submit
 "
 

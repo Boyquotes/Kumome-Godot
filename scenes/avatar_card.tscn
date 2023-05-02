@@ -1,16 +1,104 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5mxfcgqopnpc"]
+[gd_scene load_steps=5 format=3 uid="uid://b5mxfcgqopnpc"]
 
-[ext_resource type="Script" path="res://scripts/avatar_card.gd" id="1_vsytk"]
+[ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_3yxav"]
+[ext_resource type="Texture2D" uid="uid://dhqncvchmy1ud" path="res://imgs/card_art/placeholder.png" id="2_81xu2"]
+[ext_resource type="Script" path="res://scripts/avatar_card.gd" id="2_g1fh3"]
+[ext_resource type="Texture2D" uid="uid://b2k0wdq7d86cr" path="res://imgs/card_cost.png" id="4_t1ufg"]
 
-[node name="Node2D" type="Node2D"]
-script = ExtResource("1_vsytk")
+[node name="card" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 192.0
+offset_bottom = 288.0
+theme = ExtResource("1_3yxav")
+script = ExtResource("2_g1fh3")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 150.0
-offset_bottom = 200.0
-color = Color(0.131231, 0.572842, 0.913248, 1)
+[node name="title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.5
+offset_top = -24.0
+offset_right = 61.5
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Super Swap!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Button" type="Button" parent="ColorRect"]
+[node name="description_bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.042
+anchor_top = 0.583
+anchor_right = 0.958
+anchor_bottom = 0.972
+offset_left = -0.0640011
+offset_top = 0.095993
+offset_right = 0.0639954
+offset_bottom = 0.0639954
+color = Color(0.670588, 0.85098, 0.996078, 1)
+
+[node name="description" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.042
+anchor_top = 0.583
+anchor_right = 0.958
+anchor_bottom = 0.972
+offset_left = 7.936
+offset_top = 0.095993
+offset_right = -7.936
+offset_bottom = 0.0639954
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+bbcode_enabled = true
+text = "Swap positions with another player
+[b]bold[/b]
+[i]italics[/i]
+[b][i]bold italics[/i][/b]"
+
+[node name="art" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.042
+anchor_top = 0.028
+anchor_right = 0.958
+anchor_bottom = 0.444
+offset_left = -0.0640011
+offset_top = -0.0640001
+offset_right = 0.0639954
+offset_bottom = 0.127991
+texture = ExtResource("2_81xu2")
+expand_mode = 1
+
+[node name="cost" type="Sprite2D" parent="."]
+position = Vector2(176, 16)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_t1ufg")
+hframes = 6
+frame = 1
+
+[node name="bg" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133333, 0.301961, 0.376471, 1)
+
+[node name="Button" type="Button" parent="bg"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,16 +107,4 @@ grow_horizontal = 2
 grow_vertical = 2
 flat = true
 
-[node name="Label" type="Label" parent="."]
-offset_left = 13.0
-offset_top = 14.0
-offset_right = 136.0
-offset_bottom = 191.0
-theme_override_font_sizes/font_size = 32
-text = "Move
-+
-Mine"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="bg/Button" to="." method="_on_button_pressed"]

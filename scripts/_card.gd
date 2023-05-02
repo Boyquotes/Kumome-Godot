@@ -7,6 +7,8 @@ class_name Card
 signal finished
 signal selected
 
+
+
 var ACTIONS := {
 	MOVE = preload("res://scripts/actions/move.gd"),
 	MINE = preload("res://scripts/actions/mine.gd"),
@@ -16,7 +18,8 @@ var ACTIONS := {
 
 var queue : Array[Action] = []
 var id := randi() % 1000
-var avatar : Node2D
+var avatar : Control
+var cost : int = 2
 
 func _init():
 	add_actions()
@@ -24,12 +27,14 @@ func _init():
 
 # Must be overridden by a subclass
 func add_actions():
-	pass
+	assert(false, 'Must be overridden!')
+
 
 func create_avatar():
 	avatar = preload("res://scenes/avatar_card.tscn").instantiate()
-	avatar.init(self)
+	avatar.init.call_deferred(self)
 	avatar.connect('selected', emit_signal.bind('selected'))
+	avatar.cost = cost
 
 func act(pl : Player):
 	if len(queue) == 0:

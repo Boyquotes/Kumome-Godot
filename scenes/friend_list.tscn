@@ -1,0 +1,112 @@
+[gd_scene load_steps=3 format=3 uid="uid://5d5ybqmxeocd"]
+
+[ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_bt338"]
+[ext_resource type="Script" path="res://scripts/friend_list.gd" id="1_esmdp"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bt338")
+script = ExtResource("1_esmdp")
+list_endpoint = "/friend/list"
+add_endpoint = "/friend/add"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.470588, 0.45098, 0.584314, 1)
+metadata/_edit_lock_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.12
+anchor_right = 1.0
+anchor_bottom = 0.407
+offset_top = -1.52588e-05
+offset_bottom = 0.0999756
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Finding Friends..."
+
+[node name="friend_token" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.474
+anchor_right = 0.5
+anchor_bottom = 0.474
+offset_left = -257.5
+offset_top = -45.8
+offset_right = 257.5
+offset_bottom = 46.2
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Token"
+alignment = 1
+
+[node name="add" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = 23.0
+offset_right = 198.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Add friend"
+
+[node name="requests" type="Node" parent="."]
+
+[node name="list" type="HTTPRequest" parent="requests"]
+
+[node name="add" type="HTTPRequest" parent="requests"]
+
+[node name="hold_on" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="error" type="Control" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.324
+offset_bottom = -366.8
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="msg" type="Label" parent="error"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.831373, 0.45098, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="add" to="." method="_on_add_pressed"]

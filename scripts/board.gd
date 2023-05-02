@@ -36,7 +36,7 @@ func refresh():
 			add_child(square)
 
 func to_position(location : Vector2i) -> Vector2:
-	return (Vector2(location) + Vector2(0.5, 0.5)) * square_size
+	return position + (Vector2(location) + Vector2(0.5, 0.5)) * square_size
 
 func _on_resized():
 	refresh()

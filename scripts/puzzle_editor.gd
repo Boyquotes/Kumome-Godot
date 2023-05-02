@@ -141,3 +141,13 @@ func _on_play_pressed():
 
 func _on_title_pressed():
 	emit_signal('swapped_to', preload('res://scenes/title.tscn'))
+
+
+func _on_get_code_pressed():
+	if $TextEdit.visible:
+		$TextEdit.visible = false
+		$get_code.text = 'Show Code'
+	else:
+		$TextEdit.text = generate_code()
+		$TextEdit.visible = true
+		$get_code.text = 'Hide Code'

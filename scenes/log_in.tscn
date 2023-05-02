@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://corgps1eopgd7"]
+[gd_scene load_steps=3 format=3 uid="uid://corgps1eopgd7"]
 
-[ext_resource type="Script" path="res://scripts/log_in.gd" id="1_fcvna"]
+[ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_o5oy4"]
+[ext_resource type="Script" path="res://scripts/log_in.gd" id="2_5n6r2"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -9,8 +10,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fcvna")
+theme = ExtResource("1_o5oy4")
+script = ExtResource("2_5n6r2")
 endpoint = "/user/signin"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.470588, 0.45098, 0.584314, 1)
 
 [node name="center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -27,20 +38,17 @@ layout_mode = 2
 [node name="Label" type="Label" parent="center/vbox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Email"
 vertical_alignment = 2
 
 [node name="email" type="LineEdit" parent="center/vbox"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "fake@email.com"
 
 [node name="Label2" type="Label" parent="center/vbox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Password
 "
 vertical_alignment = 2
@@ -48,7 +56,6 @@ vertical_alignment = 2
 [node name="password" type="LineEdit" parent="center/vbox"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "PASSWORD!01aaa"
 
 [node name="HSeparator" type="HSeparator" parent="center/vbox"]
@@ -57,7 +64,6 @@ layout_mode = 2
 
 [node name="log_in" type="Button" parent="center/vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
 text = "Log In"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
@@ -65,11 +71,11 @@ text = "Log In"
 [node name="create_an_account" type="Button" parent="."]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-offset_left = 273.0
+offset_left = 364.0
 offset_top = 30.0
-offset_right = 773.0
-offset_bottom = 105.0
-theme_override_font_sizes/font_size = 48
+offset_right = 864.0
+offset_bottom = 107.0
+theme_override_font_sizes/font_size = 32
 text = "Create an Account"
 flat = true
 
@@ -91,8 +97,6 @@ offset_top = 184.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 48
-text = "Label"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -13,9 +13,14 @@ var touch_spots := []
 var touch_spots_node : Node2D
 var phase = PHASE.REST
 
-func card_override(c : Card):
+func card_override(c : Card) -> bool:
+	if c.cost > mana:
+		return false
+
 	clear_touch_spots()
 	super(c)
+
+	return true
 
 # move(), place(), teleport(), and unmine() all work pretty much the same way: get a list of potential
 # points for touch_sports from game, throw out any point that isn't appropriate, change the phase (for

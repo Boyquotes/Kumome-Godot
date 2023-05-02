@@ -24,10 +24,26 @@ var settings := {
 	special_cards_per_game = 2
 }
 
+@onready var data : Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://resources/data.json"))
+
 func _ready():
 	if FileAccess.file_exists(USER_PATH):
 		var file = FileAccess.open(USER_PATH, FileAccess.READ)
 		active_user = file.get_var()
+
+	var cards = get_data('Cards')
+	for card in cards:
+		print(card.title)
+
+func get_data(sheet_name : String) -> Array[Dictionary]:
+	var rv : Array[Dictionary] = []
+	for sheet in data.sheets:
+		if sheet.name == sheet_name:
+			for line in sheet.lines:
+				rv.append(line)
+			break
+
+	return rv
 
 func adjust_setting(st, val):
 	assert(st in settings)
@@ -35,6 +51,7 @@ func adjust_setting(st, val):
 
 func log_in(user : Dictionary):
 	active_user.logged_in = true
+	active_user.token = user.token
 	#active_user.username = user.username
 	save_user()
 

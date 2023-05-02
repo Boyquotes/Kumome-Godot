@@ -1,0 +1,39 @@
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://bmnlkeb5yfupy"]
+
+[ext_resource type="FontFile" uid="uid://c36xs47acqbea" path="res://fonts/Barlow-Regular.ttf" id="1_8jss6"]
+[ext_resource type="FontFile" uid="uid://bc5wntv0jcoy7" path="res://fonts/Barlow-Bold.ttf" id="1_kq77c"]
+[ext_resource type="FontFile" uid="uid://byytfe1pmwmox" path="res://fonts/Barlow-BoldItalic.ttf" id="2_0dmp5"]
+[ext_resource type="FontFile" uid="uid://cueas8la42gm5" path="res://fonts/Barlow-Italic.ttf" id="3_isvor"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ugap"]
+bg_color = Color(0.713726, 0.290196, 0.290196, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6uqm"]
+bg_color = Color(0.94902, 0.737255, 0.560784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82sm1"]
+bg_color = Color(0.713726, 0.290196, 0.290196, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6d6h"]
+bg_color = Color(0.435294, 0.14902, 0.196078, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4q3ww"]
+bg_color = Color(0.160784, 0.054902, 0.156863, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egyj5"]
+bg_color = Color(0.160784, 0.054902, 0.156863, 1)
+
+[resource]
+default_font = ExtResource("1_8jss6")
+default_font_size = 48
+Button/font_sizes/font_size = 64
+Button/styles/disabled = SubResource("StyleBoxFlat_5ugap")
+Button/styles/hover = SubResource("StyleBoxFlat_s6uqm")
+Button/styles/normal = SubResource("StyleBoxFlat_82sm1")
+Button/styles/pressed = SubResource("StyleBoxFlat_h6d6h")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_4q3ww")
+Panel/styles/panel = SubResource("StyleBoxFlat_egyj5")
+RichTextLabel/fonts/bold_font = ExtResource("1_kq77c")
+RichTextLabel/fonts/bold_italics_font = ExtResource("2_0dmp5")
+RichTextLabel/fonts/italics_font = ExtResource("3_isvor")
+RichTextLabel/fonts/normal_font = ExtResource("1_8jss6")

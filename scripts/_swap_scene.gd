@@ -22,8 +22,11 @@ func goto(pos : Vector2, callback := none):
 func swap_to_scene(ps : PackedScene):
 	emit_signal("swapped_to", ps)
 
-func post(data : Dictionary, endpoint : String):
+func post(data : Dictionary, endpoint : String, http_request = null):
+	#prints('post', data, endpoint)
 	var json = JSON.stringify(data)
 	var header = ['Content-Type: application/json']
 	$hold_on.visible = true
-	$HTTPRequest.request(Global.url + endpoint, header, HTTPClient.METHOD_POST, json)
+	if http_request == null:
+		http_request = $HTTPRequest
+	http_request.request(Global.url + endpoint, header, HTTPClient.METHOD_POST, json)

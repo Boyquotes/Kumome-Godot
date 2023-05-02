@@ -8,11 +8,12 @@ func _ready():
 func _on_request_completed(_result, response_code, _headers, body : PackedByteArray):
 	var data : Dictionary = (JSON.parse_string(body.get_string_from_utf8()))
 	if response_code == 201:
-		Global.log_in({})
+		prints('DATA', data)
+		Global.log_in({'token': data.token})
 		swap_to_scene(preload("res://scenes/title.tscn"))
 	else:
 		$hold_on.visible = false
-		var error = data.get('msg', 'Unknown Error')
+		var error = data.get('error', 'Unknown Error')
 		$error/msg.text = error
 
 

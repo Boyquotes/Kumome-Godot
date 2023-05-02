@@ -61,7 +61,7 @@ func create(lc : String):
 
 func on_turn_start(player : Player):
 	space_cards()
-	show_cards(player is PlayerHuman and player.special_cards_count < Global.settings.special_cards_per_game)
+	show_cards(player is PlayerHuman)
 
 func show_cards(b : bool):
 	for ca in $cards.get_children():
@@ -131,15 +131,20 @@ func add_cards():
 		card.connect('selected', on_card_selected.bind(card))
 
 func on_card_selected(card : Card):
-	game.active_player.card_override(card)
-	card.avatar.queue_free()
-	show_cards(false)
+	var can_afford = game.active_player.card_override(card)
+	if can_afford:
+		card.avatar.queue_free()
+		show_cards(false)
 
 func space_cards():
 	var count = $cards.get_child_count()
-	var marg = (size.x - 150*count)/(count + 1)
+	if count == 0:
+		return
+
+	var width = $cards.get_child(0).size.x
+	var marg = (size.x - width*count)/(count + 1)
 	for i in count:
-		$cards.get_child(i).position.x = marg + (150 + marg)*i
+		$cards.get_child(i).position.x = marg + (width + marg)*i
 
 func _on_quit_pressed():
 	emit_signal('quit')

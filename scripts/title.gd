@@ -1,11 +1,13 @@
 extends SwapScene
 
 func _ready():
-	for button in $buttons.get_children():
-		button.visible = false
+	if false:
+		for button in $buttons.get_children():
+			button.visible = false
 
-	#play_buttons()
-	play_intro()
+		#play_buttons()
+		play_intro()
+
 	play_rules()
 
 	$username.text = Global.active_user.get('username', '')
@@ -76,7 +78,7 @@ func _on_settings_pressed():
 
 
 func _on_credits_pressed():
-	goto_credits()
+	swap_to_scene(preload("res://scenes/web_socket_test.tscn"))
 
 
 func _on_got_it_pressed():

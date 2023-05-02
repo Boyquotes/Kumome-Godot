@@ -1,16 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbp6y3lw4jkft"]
+[gd_scene load_steps=10 format=3 uid="uid://cbp6y3lw4jkft"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_2eygo"]
+[ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_4itpu"]
 [ext_resource type="Texture2D" uid="uid://c2ympgpywrdtr" path="res://imgs/title_complete.png" id="1_lxppb"]
 [ext_resource type="Texture2D" uid="uid://bsmrqwakoce8u" path="res://imgs/title_frames.png" id="2_f8vvg"]
 [ext_resource type="Texture2D" uid="uid://b5eywq4p6qlkl" path="res://imgs/title_line.png" id="3_36e2b"]
 [ext_resource type="Texture2D" uid="uid://t6td8hp7ks2l" path="res://imgs/the_rules_logo.png" id="5_v2g04"]
+[ext_resource type="Texture2D" uid="uid://dd48jw6jwk87e" path="res://imgs/logo_1.png" id="7_crs2n"]
 
 [sub_resource type="Gradient" id="Gradient_8bdcg"]
-colors = PackedColorArray(0.427451, 0.643137, 1, 1, 0.561356, 0.243849, 0.49146, 1)
+colors = PackedColorArray(0.470588, 0.45098, 0.584314, 1, 0.286275, 0.247059, 0.403922, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ocln8"]
 gradient = SubResource("Gradient_8bdcg")
+height = 256
 fill_to = Vector2(0, 1)
 
 [node name="Control" type="Control"]
@@ -21,6 +24,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_4itpu")
 script = ExtResource("1_2eygo")
 metadata/_edit_lock_ = true
 
@@ -32,7 +36,7 @@ layout_mode = 0
 offset_left = -800.0
 offset_top = -1700.0
 offset_right = 1600.0
-color = Color(0.427451, 0.643137, 1, 1)
+color = Color(0.470588, 0.45098, 0.584314, 1)
 
 [node name="bg_gradient" type="TextureRect" parent="."]
 layout_mode = 1
@@ -55,6 +59,7 @@ offset_bottom = 91.0
 theme_override_font_sizes/font_size = 48
 
 [node name="title" type="Node2D" parent="."]
+visible = false
 position = Vector2(432, 408)
 
 [node name="TitleFrames" type="Sprite2D" parent="title"]
@@ -99,6 +104,7 @@ hframes = 6
 frame = 5
 
 [node name="title_line" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 84.0
 offset_top = 503.0
@@ -130,13 +136,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = 852.5
-offset_right = 268.0
-offset_bottom = 970.5
+offset_left = -269.0
+offset_top = 454.5
+offset_right = 279.0
+offset_bottom = 572.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
 text = "Settings
 "
 
@@ -147,14 +152,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -274.0
-offset_top = 436.5
-offset_right = 274.0
-offset_bottom = 554.5
+offset_left = -279.0
+offset_top = 626.5
+offset_right = 269.0
+offset_bottom = 744.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
-text = "Credits"
+text = "Connect"
 
 [node name="how_to" type="Button" parent="buttons"]
 layout_mode = 1
@@ -169,7 +173,6 @@ offset_right = 274.0
 offset_bottom = 382.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
 text = "How to Play"
 
 [node name="puzzles" type="Button" parent="buttons"]
@@ -185,7 +188,6 @@ offset_right = 274.0
 offset_bottom = 202.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
 text = "Create Puzzle"
 
 [node name="play" type="Button" parent="buttons"]
@@ -201,7 +203,6 @@ offset_right = 274.0
 offset_bottom = 23.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
 text = "Play Game"
 
 [node name="how_to" type="Control" parent="."]
@@ -229,8 +230,6 @@ offset_right = 337.5
 offset_bottom = 523.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 48
-theme_override_font_sizes/italics_font_size = 48
 bbcode_enabled = true
 text = "During your turn, you must accomplish two actions:
 
@@ -254,7 +253,6 @@ offset_right = 250.0
 offset_bottom = -98.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 80
 text = "Got it!"
 
 [node name="credits" type="Control" parent="."]
@@ -262,6 +260,7 @@ anchors_preset = 0
 offset_left = 800.0
 offset_right = 1600.0
 offset_bottom = 1700.0
+mouse_filter = 2
 
 [node name="got_it" type="Button" parent="credits"]
 layout_mode = 1
@@ -276,7 +275,6 @@ offset_right = 250.0
 offset_bottom = -98.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 80
 text = "Got it!"
 
 [node name="log_out" type="Button" parent="credits"]
@@ -292,7 +290,6 @@ offset_right = 266.0
 offset_bottom = -1486.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 80
 text = "Log Out"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="credits"]
@@ -300,10 +297,14 @@ layout_mode = 0
 offset_left = 111.0
 offset_top = 476.0
 offset_right = 708.0
-offset_bottom = 1310.0
-theme_override_font_sizes/normal_font_size = 80
+offset_bottom = 807.0
 bbcode_enabled = true
 text = "[center]Pretend like there is something here"
+
+[node name="Logo1" type="Sprite2D" parent="."]
+position = Vector2(399, 360)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_crs2n")
 
 [connection signal="pressed" from="buttons/settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="buttons/credits" to="." method="_on_credits_pressed"]

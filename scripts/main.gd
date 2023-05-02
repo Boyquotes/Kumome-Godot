@@ -4,13 +4,19 @@ var active_scene : SwapScene
 var saved_level : String
 var quit_to : PackedScene = preload("res://scenes/title.tscn")
 
+@onready var settings = $CanvasLayer/settings
+
+
 func _ready():
 	await get_tree().process_frame
 
 	if Global.active_user.logged_in:
+		print(Global.active_user)
 		swap_to_scene(preload("res://scenes/title.tscn"))
 	else:
 		swap_to_scene(preload("res://scenes/create_account.tscn"))
+
+	settings.connect("swapped_scene", swap_to_scene)
 
 func swap_to_scene(scene : PackedScene):
 	if active_scene != null:
@@ -22,8 +28,12 @@ func swap_to_scene(scene : PackedScene):
 	active_scene.connect('requested_level', on_level_request)
 	active_scene.connect('quit', on_quit)
 	active_scene.connect('changed_quit_to', on_change_quit_to)
+	active_scene.connect('opened_settings', open_settings)
 
 	add_child(active_scene)
+
+func open_settings():
+	settings.visible = true
 
 func save_level(lvl):
 	saved_level = lvl

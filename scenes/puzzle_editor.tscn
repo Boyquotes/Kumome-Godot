@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://byh6ic0dkd4eb"]
+[gd_scene load_steps=6 format=3 uid="uid://byh6ic0dkd4eb"]
 
 [ext_resource type="Script" path="res://scripts/board.gd" id="1_aglyg"]
 [ext_resource type="Script" path="res://scripts/puzzle_editor.gd" id="1_j1bp4"]
+[ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_lvw5t"]
 [ext_resource type="PackedScene" uid="uid://wvrbv8nef2wt" path="res://scenes/puzzle_maker_button.tscn" id="2_sse3l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sinjh"]
@@ -15,6 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_lvw5t")
 script = ExtResource("1_j1bp4")
 
 [node name="board" type="Control" parent="."]
@@ -28,7 +30,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_aglyg")
 dimensions = Vector2i(6, 6)
-colors = Array[Color]([Color(0, 0.772549, 0.694118, 1), Color(0.129412, 0.572549, 0.913725, 1)])
+colors = Array[Color]([Color(0.898039, 0.541176, 0.392157, 1), Color(0.94902, 0.737255, 0.560784, 1)])
 
 [node name="buttons" type="Control" parent="."]
 anchors_preset = 0
@@ -37,14 +39,14 @@ offset_bottom = 40.0
 mouse_filter = 2
 
 [node name="Area2D" parent="buttons" instance=ExtResource("2_sse3l")]
-position = Vector2(140, 1000)
+position = Vector2(128, 919)
 
 [node name="Area2D2" parent="buttons" instance=ExtResource("2_sse3l")]
-position = Vector2(400, 1000)
+position = Vector2(400, 919)
 id = "bot"
 
 [node name="Area2D3" parent="buttons" instance=ExtResource("2_sse3l")]
-position = Vector2(660, 1000)
+position = Vector2(669, 916)
 id = "mine"
 
 [node name="touch_spots" type="Node2D" parent="."]
@@ -53,22 +55,22 @@ id = "mine"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 325.0
-offset_top = 1185.0
-offset_right = 466.0
-offset_bottom = 1363.0
+offset_left = 316.0
+offset_top = 1068.0
+offset_right = 457.0
+offset_bottom = 1246.0
 text = "6"
 label_settings = SubResource("LabelSettings_sinjh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="size_down" parent="." instance=ExtResource("2_sse3l")]
-position = Vector2(214, 1278)
+position = Vector2(166, 1167)
 rotation = -3.14159
 id = "arrow"
 
 [node name="size_up" parent="." instance=ExtResource("2_sse3l")]
-position = Vector2(573, 1278)
+position = Vector2(609, 1164)
 id = "arrow"
 
 [node name="play" type="Button" parent="."]
@@ -83,6 +85,22 @@ offset_bottom = -57.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 64
 text = "Play"
+
+[node name="get_code" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -141.5
+offset_top = -357.0
+offset_right = 141.5
+offset_bottom = -246.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "Get Code"
 
 [node name="title" type="Button" parent="."]
 layout_mode = 1
@@ -100,5 +118,16 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 64
 text = "Quit"
 
+[node name="TextEdit" type="TextEdit" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -398.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="get_code" to="." method="_on_get_code_pressed"]
 [connection signal="pressed" from="title" to="." method="_on_title_pressed"]

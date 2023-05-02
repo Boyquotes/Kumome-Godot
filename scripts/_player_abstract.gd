@@ -21,7 +21,7 @@ var theme : Global.AVATARS = Global.AVATARS.BLACK
 var id : int
 var turns := 0
 var card : Card
-var special_cards_count := 0
+var mana := 0
 
 var color : Color
 
@@ -84,17 +84,22 @@ func add_card(c : Card):
 
 # By default, play the card move/mine
 func play_card():
+	mana += 1
 	add_card(preload("res://scripts/cards/move_mine.gd").new())
 	card.act(self)
 
 # Allows you to override the played card so that when you start your turn with play_card(), you
 # can then play a different card (e.g. teleport). The UI prevents this from being called by a
 # local player at an inappropriate time, but I think that might be error prone.
-func card_override(c : Card):
-	special_cards_count += 1
+func card_override(c : Card) -> bool:
+	if c.cost > mana:
+		return false
+
+	mana -= c.cost
 	card.queue_free()
 	add_card(c)
 	card.act(self)
+	return true
 
 # Called to tell the class to begin the move process.
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
