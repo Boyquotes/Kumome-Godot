@@ -136,7 +136,7 @@ func remove_mine_at(at : Vector2i):
 
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func perform_special_action(action_key : String, _extra_args = null):
-	push_warning(self, 'can not perform special action', action_key)
+	push_warning(self, 'can not perform special action ', action_key)
 	emit_signal.call_deferred('finished')
 
 func cant_place():

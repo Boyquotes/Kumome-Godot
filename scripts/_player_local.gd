@@ -6,12 +6,20 @@ enum PHASE {
 	REST, MOVE, PLACE, STUCK,
 
 	#Special
-	UNMINE, TARGET, CHARGE
+	UNMINE, TARGET, CHARGE, TELEPORT, SWAP
 }
 
 var touch_spots := []
 var touch_spots_node : Node2D
-var phase = PHASE.REST
+var phase = PHASE.REST :
+	set(p):
+		print(pretty_phase(phase), ' -> ', pretty_phase(p))
+		phase = p
+
+var active_target : Vector2i
+
+func pretty_phase(p):
+	return PHASE.keys()[p]
 
 func card_override(c : Card) -> bool:
 	if c.cost > mana:
@@ -22,7 +30,7 @@ func card_override(c : Card) -> bool:
 
 	return true
 
-# move(), place(), teleport(), and unmine() all work pretty much the same way: get a list of potential
+# move(), place(), target(), and unmine() all work pretty much the same way: get a list of potential
 # points for touch_sports from game, throw out any point that isn't appropriate, change the phase (for
 # use later in on_touch_spot_touched()) and add the touch_spots to the board.
 
@@ -57,8 +65,14 @@ func target(mod):
 	if mod == 'SELF':
 		await avatar.get_tree().process_frame
 		await avatar.get_tree().process_frame
-
+		active_target = location
 		emit_signal('finished')
+	elif mod == 'OTHER':
+		var potentials : Array[Vector2i] = []
+		for spot in game.get_player_spots():
+			if spot != self.location:
+				potentials.append(spot)
+		add_touch_spots(potentials)
 	else:
 		push_warning('Target: %s not implemented' % mod)
 
@@ -70,22 +84,48 @@ func teleport(mod):
 		potentials = game.get_opens()
 	elif mod == 'PLAYER':
 		potentials = game.get_spots_adjacent_to_players(game.players)
+	elif mod == 'SELF':
+		potentials = game.get_spots_adjacent_to_players([self])
 	elif mod == 'OTHER':
 		var others = game.players.duplicate()
 		others.erase(self)
 		potentials = game.get_spots_adjacent_to_players(others)
 	elif mod == 'EDGE':
 		potentials = game.get_edge_spots()
+	elif mod == 'RANDOM':
+		potentials = game.get_opens()
+		var spot : Vector2i = potentials[randi() % len(potentials)]
+		move_target_to(spot)
+		return
 	else:
 		push_warning('Teleport to %s not implemented' % mod)
 
 	if len(potentials):
 		add_touch_spots(potentials)
-		phase = PHASE.MOVE
+		phase = PHASE.TELEPORT
 	else:
 		phase = PHASE.STUCK
 		stuck = true
 		play_stuck()
+
+func swap(mod):
+	avatar.thinking = true
+	phase = PHASE.SWAP
+
+	var potentials : Array[Vector2i]
+	if mod == 'MINE':
+		potentials = game.get_mine_spots()
+	elif mod == 'OTHER':
+		potentials = game.get_player_spots()
+		potentials.erase(location)
+
+	add_touch_spots(potentials)
+
+func swap_with(loc):
+	var other = game.get_at(loc)
+	if other:
+		other.move_to(location)
+	move_to(loc)
 
 func unmine():
 	avatar.thinking = true
@@ -122,6 +162,26 @@ func charge(mod : String):
 	else:
 		move_to(location)
 
+func move_target_to(to : Vector2i):
+	prints('move', active_target, 'to', to)
+	var player = null
+	for p in game.players:
+		if p.location == active_target:
+			player = p
+
+	if player == null:
+		prints('no target')
+		emit_signal('finished')
+	elif player == self:
+		prints('move self')
+		move_to(to)
+	else:
+		prints('move', player)
+		player.move_to(to)
+		await player.finished
+		await avatar.get_tree().create_timer(0.4).timeout
+		emit_signal('finished')
+
 func perform_special_action(key : String, mod = null):
 	if key == 'unmine':
 		unmine()
@@ -131,6 +191,8 @@ func perform_special_action(key : String, mod = null):
 		target(mod)
 	elif key == 'charge':
 		charge(mod)
+	elif key == 'swap':
+		swap(mod)
 	else:
 		super(key)
 
@@ -150,6 +212,16 @@ func on_touch_spot_touched(at : Vector2i):
 		place_at(at)
 	elif phase == PHASE.UNMINE:
 		remove_mine_at(at)
+	elif phase == PHASE.TARGET:
+		active_target = at
+		emit_signal('finished')
+		return
+	elif phase == PHASE.TELEPORT:
+		move_target_to(at)
+	elif phase == PHASE.SWAP:
+		swap_with(at)
+	else:
+		push_warning('Confused touch spot ', at, phase)
 
 	phase = PHASE.REST
 

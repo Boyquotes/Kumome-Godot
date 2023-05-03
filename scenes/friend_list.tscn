@@ -25,7 +25,7 @@ grow_vertical = 2
 color = Color(0.470588, 0.45098, 0.584314, 1)
 metadata/_edit_lock_ = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="friend_list" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.12
@@ -36,10 +36,28 @@ offset_bottom = 0.0999756
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="friend_list"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="friend_list/VBoxContainer"]
+layout_mode = 2
+text = "Finding Friends..."
+
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.12
+anchor_right = 1.0
+anchor_bottom = 0.407
+offset_top = 854.0
+offset_bottom = 854.1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Finding Friends..."
 
@@ -56,7 +74,7 @@ offset_right = 257.5
 offset_bottom = 46.2
 grow_horizontal = 2
 grow_vertical = 2
-placeholder_text = "Token"
+placeholder_text = "Friend's ID"
 alignment = 1
 
 [node name="add" type="Button" parent="."]

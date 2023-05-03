@@ -6,16 +6,14 @@ func _ready():
 	$HTTPRequest.request_completed.connect(_on_request_completed)
 
 func _on_request_completed(_result, response_code, _headers, body : PackedByteArray):
-	print(body.get_string_from_utf8())
-	var data : Dictionary = (JSON.parse_string(body.get_string_from_utf8()))
+	var data : Dictionary = JSON.parse_string(body.get_string_from_utf8()).get('data', {})
 	if response_code == 200:
-		Global.log_in({'token' : data.data})
+		Global.log_in(data)
 		swap_to_scene(preload("res://scenes/title.tscn"))
 	else:
 		$hold_on.visible = false
 
 		var error = data.get('error', 'Unknown Error')
-		print(error)
 		$error/msg.text = error
 
 

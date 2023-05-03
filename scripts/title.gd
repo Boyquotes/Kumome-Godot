@@ -78,7 +78,7 @@ func _on_settings_pressed():
 
 
 func _on_credits_pressed():
-	swap_to_scene(preload("res://scenes/web_socket_test.tscn"))
+	swap_to_scene(preload("res://scenes/friend_list.tscn"))
 
 
 func _on_got_it_pressed():

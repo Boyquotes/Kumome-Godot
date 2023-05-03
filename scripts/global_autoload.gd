@@ -49,10 +49,14 @@ func adjust_setting(st, val):
 	assert(st in settings)
 	settings[st] = val
 
-func log_in(user : Dictionary):
+func log_in(user_data : Dictionary):
 	active_user.logged_in = true
-	active_user.token = user.token
-	#active_user.username = user.username
+	active_user.token = user_data.get('token', '')
+	var user = user_data.get('user', {})
+	active_user.id = user.get('_id', '')
+	active_user.email = user.get('email', '')
+	active_user.username = user.get('username', '')
+
 	save_user()
 
 func log_out():

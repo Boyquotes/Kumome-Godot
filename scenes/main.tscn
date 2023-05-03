@@ -21,6 +21,7 @@ B 3 3
 ..x1..
 ..0...
 ......"
+instant_play = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

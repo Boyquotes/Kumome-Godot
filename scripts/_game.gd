@@ -112,7 +112,7 @@ func add_player(p : Player):
 	p.connect('commited_to_action', emit_signal.bind('commited_to_action'))
 
 func add_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
-	return add_any_mine_at(Mine.new(), at, color)
+	return add_any_mine_at(Mine.new(self), at, color)
 
 func add_instant_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(MineInstant.new(), at, color)
@@ -208,6 +208,15 @@ func get_spots_adjacent_to_players(list : Array[Player]) -> Array[Vector2i]:
 				rv.append(m)
 
 	return rv
+
+func get_at(loc : Vector2i):
+	for p in players:
+		if p.location == loc:
+			return p
+	for m in mines:
+		if m.location == loc:
+			return m
+	return null
 
 # Get all points with a mine on them
 func get_mine_spots() -> Array[Vector2i]:

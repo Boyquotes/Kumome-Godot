@@ -11,11 +11,7 @@ signal selected
 var actions := {
 	move = preload("res://scripts/actions/move.gd"),
 	mine = preload("res://scripts/actions/mine.gd"),
-	unmine = preload("res://scripts/actions/unmine.gd"),
-	teleport = preload("res://scripts/actions/teleport.gd"),
-	target = preload("res://scripts/actions/target.gd"),
-	charge = preload("res://scripts/actions/charge.gd"),
-	not_implemented = preload("res://scripts/actions/not_implemented.gd")
+	special = preload("res://scripts/actions/special.gd")
 }
 
 var queue : Array[Action] = []
@@ -58,6 +54,6 @@ func discard():
 
 func add_action(a : String, m : String):
 	if a == '_': return
-	var action : Action = actions.get(a, actions.not_implemented).new(a, m)
+	var action : Action = actions.get(a, actions.special).new(a, m)
 
 	queue.append(action)
