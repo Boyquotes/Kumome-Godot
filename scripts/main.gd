@@ -13,7 +13,7 @@ func _ready():
 	await get_tree().process_frame
 
 	if instant_play:
-		swap_to_scene(preload("res://scenes/play.tscn"))
+		swap_to_scene(preload("res://scenes/log_in.tscn"))
 	elif Global.active_user.logged_in:
 		swap_to_scene(preload("res://scenes/title.tscn"))
 	else:

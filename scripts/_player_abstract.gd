@@ -11,6 +11,7 @@ class_name Player
 signal finished
 signal card_finished
 signal commited_to_action
+signal sent
 
 var avatar
 var team : int
@@ -18,14 +19,18 @@ var location : Vector2i
 var game : Game
 var stuck : bool = false
 var theme : Global.AVATARS = Global.AVATARS.BLACK
-var id : int
+var id : String
 var turns := 0
 var card : Card
 var mana := 0
+var is_active : bool :
+	get:
+		return len(card.queue) > 0
 
 var color : Color
 
-func _init(_theme : Global.AVATARS, _team : int):
+func _init(_theme : Global.AVATARS, _team : int, _id : String):
+	id = _id
 	team = _team
 	add_avatar()
 	theme = _theme
@@ -112,6 +117,7 @@ func move_to(to : Vector2i):
 	avatar.thinking = false
 	location = to
 	avatar.move_to(game.board.to_position(location), emit_signal.bind('finished'))
+	send_action('move')
 
 # Called to tell the class to begin the mine placing process
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
@@ -123,6 +129,7 @@ func place_at(at : Vector2i):
 	avatar.thinking = false
 	var mine := game.add_mine_at(at, color)
 	mine.avatar.connect('finished', emit_signal.bind('finished'))
+	send_action('place')
 
 func remove_mine_at(at : Vector2i):
 	avatar.thinking = false
@@ -133,6 +140,10 @@ func remove_mine_at(at : Vector2i):
 				mine.avatar.connect('finished', emit_signal.bind('finished'))
 	else:
 		emit_signal.call_deferred('finished')
+
+
+func send_action(act : String):
+	emit_signal('sent', act)
 
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func perform_special_action(action_key : String, _extra_args = null):

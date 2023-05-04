@@ -60,7 +60,8 @@ func goto_credits():
 	goto(Vector2(1200, 850))
 
 func goto_play():
-	goto(Vector2(400, -850), emit_signal.bind('swapped_to', preload("res://scenes/setup.tscn")))
+	#goto(Vector2(400, -850), emit_signal.bind('swapped_to', preload("res://scenes/setup.tscn")))
+	swap_to_scene(preload("res://scenes/setup_remote_game.tscn"))
 
 func goto_puzzle_editor():
 	goto(Vector2(400, -850), emit_signal.bind('swapped_to', preload("res://scenes/puzzle_editor.tscn")))
@@ -78,7 +79,7 @@ func _on_settings_pressed():
 
 
 func _on_credits_pressed():
-	swap_to_scene(preload("res://scenes/friend_list.tscn"))
+	swap_to_scene(preload("res://scenes/web_socket_test.tscn"))
 
 
 func _on_got_it_pressed():

@@ -15,7 +15,7 @@ var actions := {
 }
 
 var queue : Array[Action] = []
-var id := randi() % 1000
+var key := 1
 var avatar : Control
 var cost : int = 2
 var data : Dictionary

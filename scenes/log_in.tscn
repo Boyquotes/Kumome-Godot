@@ -122,5 +122,14 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Logging in..."
 
+[node name="p2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 506.0
+offset_right = 576.0
+offset_bottom = 583.0
+text = "--player 2--"
+
 [connection signal="pressed" from="center/vbox/log_in" to="." method="_on_log_in_pressed"]
 [connection signal="pressed" from="create_an_account" to="." method="_on_create_an_account_pressed"]
+[connection signal="pressed" from="p2" to="." method="_on_p_2_pressed"]

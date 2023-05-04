@@ -28,3 +28,9 @@ func _on_create_an_account_pressed():
 
 func _on_log_in_pressed():
 	post(get_data(), endpoint)
+
+
+func _on_p_2_pressed():
+	$center/vbox/email.text = 'fake2@email.com'
+	_on_log_in_pressed()
+

@@ -13,7 +13,7 @@ var touch_spots := []
 var touch_spots_node : Node2D
 var phase = PHASE.REST :
 	set(p):
-		print(pretty_phase(phase), ' -> ', pretty_phase(p))
+		#print(pretty_phase(phase), ' -> ', pretty_phase(p))
 		phase = p
 
 var active_target : Vector2i

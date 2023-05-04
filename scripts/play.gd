@@ -43,10 +43,16 @@ func create(lc : String):
 	var data = Global.parse_code(level_code, {
 		'L': create_local_player,
 		'B': create_ai_player,
-		'I': create_ai_instant_player
+		'I': create_ai_instant_player,
+		'R': create_remote_player
 	})
 
-	game = Game.new($board, data.size)
+	if not data.valid:
+		prints('Invalid level code\n', level_code)
+		swap_to_scene(preload("res://scenes/title.tscn"))
+		return
+
+	game = Game.new($board, data.size, data.id)
 
 	game.connect('added_mine', add_mine_to_tree)
 	game.connect('game_over', on_game_over)
@@ -56,7 +62,7 @@ func create(lc : String):
 
 	for obj in data.map:
 		if obj.player:
-			obj.constructor.call(obj.color, obj.team, obj.loc)
+			obj.constructor.call(obj.color, obj.team, obj.loc, obj.id)
 		else:
 			add_mine_at(obj.loc)
 
@@ -83,19 +89,24 @@ func show_cards(b : bool):
 func update_ui():
 	$ui/player.texture = game.active_player.avatar.texture
 
-func create_local_player(id : int, team : int, at : Vector2i) -> PlayerHuman:
-	var player := PlayerHuman.new(id, team)
+func create_local_player(thm : int, team : int, at : Vector2i, id : String) -> PlayerHuman:
+	var player := PlayerHuman.new(thm, team, id)
 	player.touch_spots_node = $touch_spots
 	create_player(player, at)
 	return player
 
-func create_ai_player(id : int, team : int, at : Vector2i) -> PlayerAI:
-	var player := PlayerAI.new(id, team)
+func create_ai_player(thm : int, team : int, at : Vector2i, id : String) -> PlayerAI:
+	var player := PlayerAI.new(thm, team, id)
 	create_player(player, at)
 	return player
 
-func create_ai_instant_player(id : int, team : int, at : Vector2i) -> PlayerAIInstant:
-	var player := PlayerAIInstant.new(id, team)
+func create_remote_player(thm : int, team : int, at : Vector2i, id : String) -> PlayerRemote:
+	var player := PlayerRemote.new(thm, team, id)
+	create_player(player, at)
+	return player
+
+func create_ai_instant_player(thm : int, team : int, at : Vector2i, id : String) -> PlayerAIInstant:
+	var player := PlayerAIInstant.new(thm, team, id)
 	create_player(player, at)
 	return player
 

@@ -15,9 +15,12 @@ var turn := 0
 var board : GameBoard
 var dimensions : Vector2i
 var verbose : bool = false
+var is_remote := false
+var id : String
 
-func _init(_board : GameBoard, dims := Vector2i.ZERO):
+func _init(_board : GameBoard, dims := Vector2i.ZERO, _id := ''):
 	board = _board
+	id = _id
 
 	if dims == Vector2i.ZERO:
 		dimensions = board.dimensions
@@ -68,6 +71,30 @@ func get_active_teams() -> Array[int]:
 
 	return active_teams
 
+func find_next_active_player() -> Player:
+	var teams := get_active_teams()
+	var a_team := active_team
+	if a_team == -1:
+		a_team = minimum(teams)
+		for player in players:
+			if player.team == a_team:
+				return player
+
+	var team_index = teams.find(active_player.team)
+	team_index = wrapi(team_index + 1, 0, len(teams))
+	a_team = teams[team_index]
+
+	var best_player = null
+	for player in players:
+		if (
+			player.team == a_team and
+			not player.stuck and
+			(best_player == null or player.turns < best_player.turns)
+		):
+			best_player = player
+
+	return best_player
+
 # I think this method is kinda sloppy and potentially buggy.
 func get_next_active_player() -> void:
 	var teams := get_active_teams()
@@ -105,17 +132,63 @@ func is_active_player_stuck() -> bool:
 	return active_player.stuck
 
 func add_player(p : Player):
-	p.id = len(players)
+	#p.id = str(len(players)) if id == '' else id
 	players.append(p)
 	p.game = self
 	p.avatar.size = board.square_size
 	p.connect('commited_to_action', emit_signal.bind('commited_to_action'))
+	p.connect('sent', send_action)
+	if p is PlayerRemote:
+		is_remote = true
+
+
+func send_action(act : String):
+	if not is_remote: return
+
+	WS.send_board_update(
+		get_action_key(act),
+		active_player.card.key,
+		active_player.id,
+		active_player.id if active_player.is_active else find_next_active_player().id,
+		id,
+		export_board()
+	)
+
+func export_board() -> Array:
+	var rv = [null]
+	for i in range(dimensions.y):
+		rv.append([null])
+		for j in range(dimensions.x):
+			rv[i+1].append('0')
+
+	for player in players:
+		rv[player.location.x + 1][player.location.y + 1] = player.id
+
+	for mine in mines:
+		rv[mine.location.x + 1][mine.location.y + 1] = 'x'
+
+	return rv
+
+func get_action_key(act : String) -> int:
+	var actions := {
+		'move': Global.ACTIONS.MOVE,
+		'place': Global.ACTIONS.MINE,
+		'teleport': Global.ACTIONS.TELEPORT,
+		'unmine': Global.ACTIONS.UNMINE,
+		'swap': Global.ACTIONS.SWAP,
+		'charge': Global.ACTIONS.CHARGE,
+		'target': Global.ACTIONS.TARGET,
+		'invisible': Global.ACTIONS.INVISIBLE,
+		'darkness': Global.ACTIONS.DARKNESS
+	}
+	return actions.get(act, 0)
 
 func add_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(Mine.new(self), at, color)
 
 func add_instant_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(MineInstant.new(), at, color)
+
 
 # If there is no mine at the requested location, return an empty array
 # If there is a mine at the requested location, return an array with the mine in it

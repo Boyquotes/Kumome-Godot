@@ -15,6 +15,18 @@ enum AVATARS {
 	BEAR = 5, CHICKEN = 6, ELEPHANT = 7, OWL = 8, RHINO = 9, SNAKE = 10, MONKEY = 11, WALRUS = 12
 }
 
+enum ACTIONS {
+	MOVE = 1,
+	MINE = 2,
+	TELEPORT = 3,
+	UNMINE = 4,
+	SWAP = 5,
+	CHARGE = 6,
+	TARGET = 7,
+	INVISIBLE = 8,
+	DARKNESS = 9
+}
+
 var active_user := {
 	logged_in = false
 }
@@ -67,6 +79,31 @@ func save_user():
 	var file = FileAccess.open(USER_PATH, FileAccess.WRITE)
 	file.store_var(active_user)
 
+func create_remote_game(board : Array, id : String) -> String:
+	var players := []
+	var header := ''
+	var body := ''
+	for i in range(1, len(board)):
+		for j in range(1, len(board[i])):
+			var square = board[i][j]
+			if square == '0':
+				body += '.'
+			elif square == 'x':
+				body += 'x'
+			else:
+				body += str(len(players))
+				players.append([square, square == active_user.id, len(players)])
+		body += '\n'
+
+	for player in players:
+		header += '%s %s %s %s\n' % [
+			'L' if player[1] else 'R',
+			player[2],
+			player[2],
+			player[0]
+		]
+	return '#%s\n%s\n-\n%s' % [id, header, body]
+
 # Parses a given level_code and returns a dictionary with all the relevant data.
 # The details of the level_code spec can be found in "res://scripts/notes.gd". The parse_consturctoe_code dictionary
 # shoud be of the form: {
@@ -86,18 +123,29 @@ func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dic
 	var key := []
 	var map : Array[Dictionary] = []
 	var size := Vector2i.ZERO
+	var count := -1
+	var id := ''
 	for line in level_code.split('\n'):
+		count += 1
 		if parse_header:
-			if line.begins_with('-'):
+			if line.begins_with('#'):
+				id = line.substr(1).strip_edges()
+			elif line.begins_with('-'):
 				parse_header = false
 			else:
-				var split = line.split(' ')
-				if len(split) != 3:
+				var split = line.strip_edges().split(' ')
+				if len(line) == 0:
+					continue
+				elif len(split) == 3:
+					split.append(str(count))
+				elif len(split) != 4:
+					push_warning('bad header line (%s)(%s)' % [split, line])
 					return {'valid' = false}
 				key.append([
 					parse_constructor_code.get(split[0]),
 					int(split[1]),
-					int(split[2])
+					int(split[2]),
+					split[3]
 				])
 		elif len(line):
 			for i in len(line):
@@ -109,7 +157,8 @@ func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dic
 						constructor = dict[0],
 						color = dict[1],
 						team = dict[2],
-						loc = Vector2i(i, size.y)
+						loc = Vector2i(i, size.y),
+						id = dict[3]
 					})
 				elif c == 'x':
 					map.append({
@@ -118,7 +167,7 @@ func parse_code(level_code : String, parse_constructor_code : Dictionary) -> Dic
 					})
 			size.y += 1
 			size.x = max(size.x, len(line))
-	return {size = size, map = map, valid = true}
+	return {size = size, map = map, valid = true, id = id}
 
 # Useful for making a quick level_code for debugging purposes
 func generate_2p_level(p1 : String, p2 : String, size : int, starting_mines : bool) -> String:
