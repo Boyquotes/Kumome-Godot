@@ -49,6 +49,7 @@ func init(card : Card):
 	title = card.data.title
 	cost = card.data.cost
 	short_description = card.data.description
+	card_art = Global.card_arts[card.data.art]
 
 func refresh():
 	if not is_inside_tree(): return

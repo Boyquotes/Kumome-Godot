@@ -33,7 +33,6 @@ func on_message_received(event : String, data : Dictionary):
 
 func start_game(data : Dictionary):
 	var board = Global.create_remote_game(data.get('board', []), data.get('gameId', ''))
-	print(board)
 	emit_signal('generated_level', board)
 	swap_to_scene(preload("res://scenes/play.tscn"))
 

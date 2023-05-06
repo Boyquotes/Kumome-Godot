@@ -3,7 +3,7 @@ extends Node
 # This is an autoload, other languages call it a "singleton" Any method or value in this script
 # can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
 
-const url := 'http://localhost:3001'
+const url := 'http://159.223.106.122:3001' #http://localhost:3001'
 
 const board_4p := '........|........|........|...02...|...31...|........|........|........'
 const board_8p := '........|........|...56...|..2..0..|..1..3..|...74...|........|........'
@@ -15,18 +15,6 @@ enum AVATARS {
 	BEAR = 5, CHICKEN = 6, ELEPHANT = 7, OWL = 8, RHINO = 9, SNAKE = 10, MONKEY = 11, WALRUS = 12
 }
 
-enum ACTIONS {
-	MOVE = 1,
-	MINE = 2,
-	TELEPORT = 3,
-	UNMINE = 4,
-	SWAP = 5,
-	CHARGE = 6,
-	TARGET = 7,
-	INVISIBLE = 8,
-	DARKNESS = 9
-}
-
 var active_user := {
 	logged_in = false
 }
@@ -36,6 +24,10 @@ var settings := {
 	special_cards_per_game = 2
 }
 
+var actions : Dictionary = {}
+var modifiers : Dictionary = {}
+var card_arts : Dictionary = {}
+
 @onready var data : Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://resources/data.json"))
 
 func _ready():
@@ -43,15 +35,59 @@ func _ready():
 		var file = FileAccess.open(USER_PATH, FileAccess.READ)
 		active_user = file.get_var()
 
+	for mod in get_data('Modifiers'):
+		modifiers[mod.name] = int(mod.key)
+
+	for act in get_data('Actions'):
+		actions[act.name] = int(act.key)
+
+	var card_art_path := "res://imgs/card_art/"
+	for img in DirAccess.get_files_at(card_art_path):
+		if img.get_extension() == 'png':
+			var path := card_art_path.path_join(img)
+			card_arts[FileAccess.get_md5(path)] = load(path)
+
+	print(card_arts)
+
+func generate_all_cards():
+	var actions = {
+		'move': ['_'],
+		'mine': ['_'],
+		'teleport': ['_', 'ALLY', 'ENEMY', 'EDGE', 'RANDOM'],
+		'unmine': ['_', 'EDGE', 'RANDOM', 'OTHER', 'SELF'],
+		'charge': ['N', 'S', 'E', 'W', 'SE', 'NE', 'SW', 'NW', 'RANDOM'],
+		'target': ['SELF', 'ALLY', 'OTHER', 'RANDOM', 'MINE']
+	}
+
+	var i := 0
+	for a1 in actions:
+		for a2 in actions:
+			for m1 in actions[a1]:
+				for m2 in actions[a2]:
+					if (
+						(a1 == 'teleport') or
+						(a1 == 'target' and a2 != 'teleport') or
+						(a1 != 'target' and a2 == 'teleport')
+					):
+						continue
+					i += 1
+					prints(i, a1, m1, a2, m2)
+
 func get_card(n : int) -> Card:
 	return Card.new(get_data('Cards')[n])
+
+func get_action_key(act : String, mod : String) -> int:
+	if not act in actions or not mod in modifiers:
+		push_warning('Invaild (action, modifier): (%sv %s)' % [act, mod])
+		return -1
+	return 256 * modifiers[mod] + actions[act]
 
 func get_data(sheet_name : String) -> Array[Dictionary]:
 	var rv : Array[Dictionary] = []
 	for sheet in data.sheets:
 		if sheet.name == sheet_name:
 			for line in sheet.lines:
-				if line.active:
+				if line.get('active', true):
 					rv.append(line)
 			break
 

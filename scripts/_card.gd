@@ -15,20 +15,46 @@ var actions := {
 }
 
 var queue : Array[Action] = []
-var key := 1
+var key : int : get = get_key
+var _key : int = -1
 var avatar : Control
 var cost : int = 2
 var data : Dictionary
+var active_action : Action
 
 
 func _init(_data : Dictionary):
 	data = _data
 	cost = data.cost
-	for i in range(1, 4):
+	for i in range(1, 5):
 		var a = data.get('action_%s' % i, '_')
 		var m = data.get('modifier_%s' % i, '_')
 		add_action(a, m)
 	create_avatar()
+
+
+	prints(String.num_int64(key, 16), key)
+
+func get_key() -> int:
+	if _key != -1:
+		return _key
+
+	_key = 0
+	shift_key(2)
+	shift_key(1)
+	shift_key(cost)
+	for i in 3:
+		if i < len(queue):
+			shift_key(queue[i].key, 4)
+		else:
+			shift_key(0, 4)
+
+	return _key
+
+func shift_key(value : int, steps := 1):
+	for _i in steps:
+		_key *= 16
+	_key += value
 
 func create_avatar():
 	avatar = preload("res://scenes/avatar_card.tscn").instantiate()
@@ -43,9 +69,9 @@ func act(pl : Player):
 		perform_action(pl)
 
 func perform_action(pl):
-	var action : Action = queue.pop_front()
-	action.connect('finished', act.bind(pl))
-	action.act(pl)
+	active_action = queue.pop_front()
+	active_action.connect('finished', act.bind(pl))
+	active_action.act(pl)
 
 func discard():
 	emit_signal('finished')

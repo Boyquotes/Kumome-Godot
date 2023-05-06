@@ -117,7 +117,7 @@ func move_to(to : Vector2i):
 	avatar.thinking = false
 	location = to
 	avatar.move_to(game.board.to_position(location), emit_signal.bind('finished'))
-	send_action('move')
+	send_action()
 
 # Called to tell the class to begin the mine placing process
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
@@ -129,7 +129,7 @@ func place_at(at : Vector2i):
 	avatar.thinking = false
 	var mine := game.add_mine_at(at, color)
 	mine.avatar.connect('finished', emit_signal.bind('finished'))
-	send_action('place')
+	send_action()
 
 func remove_mine_at(at : Vector2i):
 	avatar.thinking = false
@@ -142,8 +142,9 @@ func remove_mine_at(at : Vector2i):
 		emit_signal.call_deferred('finished')
 
 
-func send_action(act : String):
-	emit_signal('sent', act)
+func send_action():
+	var key = card.active_action.key
+	emit_signal('sent', key)
 
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func perform_special_action(action_key : String, _extra_args = null):

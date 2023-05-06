@@ -1,5 +1,7 @@
 extends Node
 
+const url = 'ws://159.223.106.122:3001/'
+
 # Receive
 const rCONNECTED = 'connected'
 const rJOINED = 'freeForAll/joined'
@@ -23,11 +25,12 @@ var is_connected := false
 var is_polling := false
 var game_id : String
 
+
 func connect_to_server():
 	if is_connected:
 		return
 
-	socket.connect_to_url('ws://127.0.0.1:3001/?token=%s' % Global.active_user.token)
+	socket.connect_to_url('%s?token=%s' % [url, Global.active_user.token])
 	is_polling = true
 
 func _process(_delta):

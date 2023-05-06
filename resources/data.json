@@ -17,6 +17,11 @@
 					"name": "cost"
 				},
 				{
+					"typeStr": "7",
+					"name": "art",
+					"display": null
+				},
+				{
 					"typeStr": "1",
 					"name": "description",
 					"display": null
@@ -69,7 +74,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Double Step",
@@ -82,10 +88,11 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
-					"title": "Double Mine",
+					"title": "Two Mines",
 					"cost": 1,
 					"description": "place two mines",
 					"action_1": "mine",
@@ -95,7 +102,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Pickup the trash",
@@ -108,7 +116,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Beam me Up",
@@ -121,7 +130,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Escape Plan",
@@ -134,7 +144,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "I love you",
@@ -147,7 +158,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Bubble",
@@ -160,7 +172,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Charge North",
@@ -173,11 +186,12 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Charge South",
-					"cost": 1,
+					"cost": 3,
 					"description": "Move in a straight line and gobble all mines along the way!",
 					"action_1": "charge",
 					"modifier_1": "S",
@@ -186,7 +200,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Charge West",
@@ -199,7 +214,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Charge East",
@@ -212,7 +228,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Charge North West",
@@ -225,7 +242,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Charge North East",
@@ -238,7 +256,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Charge South West",
@@ -251,7 +270,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Charge South East",
@@ -264,11 +284,12 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Life on the edge",
-					"cost": 1,
+					"cost": 2,
 					"description": "Teleport to a square on the edge of the board",
 					"action_1": "target",
 					"modifier_1": "SELF",
@@ -277,7 +298,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Roll the dice",
@@ -290,7 +312,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "You love me",
@@ -303,7 +326,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Targeted Roll the Dice",
@@ -316,7 +340,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Mine swap",
@@ -329,7 +354,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Wife swap",
@@ -342,7 +368,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				},
 				{
 					"title": "Turn invisible",
@@ -355,7 +382,8 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
 				},
 				{
 					"title": "Fog of War",
@@ -368,7 +396,36 @@
 					"action_3": "_",
 					"modifier_3": "_",
 					"active": true,
-					"Notes": ""
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
+				},
+				{
+					"active": true,
+					"title": "Tripple Move",
+					"cost": 1,
+					"description": "Move three times",
+					"action_1": "move",
+					"modifier_1": "_",
+					"action_2": "move",
+					"modifier_2": "_",
+					"action_3": "move",
+					"modifier_3": "_",
+					"Notes": "",
+					"art": "d71c9e22b1420b5d3162a039964f49df"
+				},
+				{
+					"active": true,
+					"title": "Move mine move",
+					"cost": 1,
+					"description": "???",
+					"action_1": "move",
+					"modifier_1": "_",
+					"action_2": "mine",
+					"modifier_2": "_",
+					"action_3": "move",
+					"modifier_3": "_",
+					"Notes": "",
+					"art": "1f223c74fb94484772cbd6ac8daf9b77"
 				}
 			],
 			"separators": [],
@@ -418,7 +475,7 @@
 				{
 					"key": 3,
 					"name": "teleport",
-					"implemented": false,
+					"implemented": true,
 					"notes": "Teleport to an empty square adjacent to ALLY, ENEMY, EDGE, etc. MUST be proceeded by target action"
 				},
 				{
@@ -430,19 +487,19 @@
 				{
 					"key": 5,
 					"name": "swap",
-					"implemented": false,
+					"implemented": true,
 					"notes": "Swap places with target ALLY, ENEMY, EDGE, etc"
 				},
 				{
 					"key": 6,
 					"name": "charge",
-					"implemented": false,
+					"implemented": true,
 					"notes": "charge in a straight line, modify with direction e.g. N or SW"
 				},
 				{
 					"key": 7,
 					"name": "target",
-					"implemented": false,
+					"implemented": true,
 					"notes": "Choose a target"
 				},
 				{
@@ -465,6 +522,10 @@
 			"name": "Modifiers",
 			"columns": [
 				{
+					"typeStr": "3",
+					"name": "key"
+				},
+				{
 					"typeStr": "0",
 					"name": "name",
 					"display": null
@@ -478,103 +539,189 @@
 			"lines": [
 				{
 					"name": "_",
-					"notes": "No modifier"
+					"notes": "No modifier",
+					"key": 0
 				},
 				{
 					"name": "N",
-					"notes": "North"
+					"notes": "North",
+					"key": 1
 				},
 				{
 					"name": "S",
-					"notes": "South"
+					"notes": "South",
+					"key": 2
 				},
 				{
 					"name": "W",
-					"notes": "West"
+					"notes": "West",
+					"key": 3
 				},
 				{
 					"name": "E",
-					"notes": "East"
+					"notes": "East",
+					"key": 4
 				},
 				{
 					"name": "NW",
-					"notes": "North West"
+					"notes": "North West",
+					"key": 5
 				},
 				{
 					"name": "NE",
-					"notes": "North East"
+					"notes": "North East",
+					"key": 6
 				},
 				{
 					"name": "SW",
-					"notes": "South West"
+					"notes": "South West",
+					"key": 7
 				},
 				{
 					"name": "SE",
-					"notes": "South East"
+					"notes": "South East",
+					"key": 8
 				},
 				{
 					"name": "ALLY",
-					"notes": "Team mate (including self)"
+					"notes": "Team mate (including self)",
+					"key": 9
 				},
 				{
 					"name": "ENEMY",
-					"notes": ""
+					"notes": "",
+					"key": 10
 				},
 				{
 					"name": "SELF",
-					"notes": ""
+					"notes": "",
+					"key": 11
 				},
 				{
 					"name": "MINE",
-					"notes": ""
+					"notes": "",
+					"key": 12
 				},
 				{
 					"name": "PLAYER",
-					"notes": "Any player, use ALLY, ENEMY, or OTHER if you need specificity"
+					"notes": "Any player, use ALLY, ENEMY, or OTHER if you need specificity",
+					"key": 13
 				},
 				{
 					"name": "EMPTY",
-					"notes": "Any unoccupied square"
+					"notes": "Any unoccupied square",
+					"key": 14
 				},
 				{
 					"name": "FULL",
-					"notes": "Any occupied square"
+					"notes": "Any occupied square",
+					"key": 15
 				},
 				{
 					"name": "EDGE",
-					"notes": "Edge of board"
+					"notes": "Edge of board",
+					"key": 16
 				},
 				{
 					"name": "RANDOM",
-					"notes": "random, empty square "
+					"notes": "random, empty square ",
+					"key": 17
 				},
 				{
 					"name": "ONE",
-					"notes": ""
+					"notes": "",
+					"key": 18
 				},
 				{
 					"name": "TWO",
-					"notes": ""
+					"notes": "",
+					"key": 19
 				},
 				{
 					"name": "THREE",
-					"notes": ""
+					"notes": "",
+					"key": 20
 				},
 				{
 					"name": "FOUR",
-					"notes": ""
+					"notes": "",
+					"key": 21
 				},
 				{
 					"name": "FIVE",
-					"notes": ""
+					"notes": "",
+					"key": 22
 				},
 				{
 					"name": "FOREVER",
-					"notes": ""
+					"notes": "",
+					"key": 23
 				},
 				{
 					"name": "OTHER",
-					"notes": "Any player other than yourself"
+					"notes": "Any player other than yourself",
+					"key": 24
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "Characters",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "key",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "name"
+				},
+				{
+					"typeStr": "7",
+					"name": "portaits",
+					"display": null
+				},
+				{
+					"typeStr": "7",
+					"name": "bust",
+					"display": null
+				},
+				{
+					"typeStr": "11",
+					"name": "color",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"key": "dajirou",
+					"name": "Da Jirou",
+					"bust": "da053b0fb83238c1623beb37c1b45a4e",
+					"color": 11852191,
+					"portaits": "e20bb2e1a2f027e86cabf145b35700b1"
+				},
+				{
+					"key": "bert",
+					"name": "Bert",
+					"bust": "6e9601b1a9616c9f783806c9dd79eebf",
+					"color": 11982319,
+					"portaits": "05cba8a0c209cd40d4dcd0a53e588487"
+				},
+				{
+					"key": "saidi",
+					"name": "Saidi",
+					"bust": "6b1856161fe7cd17cdf0dee24f2b9731",
+					"color": 15513777,
+					"portaits": "77a3bd435287381986cd1af87dad1ea1"
+				},
+				{
+					"key": "nubia",
+					"name": "Nubia",
+					"bust": "4043c60233ed2a42dd8c63e9abc5717a",
+					"color": 15916706,
+					"portaits": "fbfc2a90e58bb213b785853029cb6e3b"
 				}
 			],
 			"separators": [],

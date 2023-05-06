@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbp6y3lw4jkft"]
+[gd_scene load_steps=9 format=3 uid="uid://cbp6y3lw4jkft"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_2eygo"]
 [ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_4itpu"]
-[ext_resource type="Texture2D" uid="uid://c2ympgpywrdtr" path="res://imgs/title_complete.png" id="1_lxppb"]
-[ext_resource type="Texture2D" uid="uid://bsmrqwakoce8u" path="res://imgs/title_frames.png" id="2_f8vvg"]
 [ext_resource type="Texture2D" uid="uid://b5eywq4p6qlkl" path="res://imgs/title_line.png" id="3_36e2b"]
+[ext_resource type="Texture2D" uid="uid://c7sspjrwvp2rx" path="res://imgs/logo_exploded.png" id="4_100il"]
 [ext_resource type="Texture2D" uid="uid://t6td8hp7ks2l" path="res://imgs/the_rules_logo.png" id="5_v2g04"]
 [ext_resource type="Texture2D" uid="uid://dd48jw6jwk87e" path="res://imgs/logo_1.png" id="7_crs2n"]
 
@@ -58,48 +57,54 @@ offset_right = 257.0
 offset_bottom = 91.0
 theme_override_font_sizes/font_size = 48
 
-[node name="title" type="Node2D" parent="."]
+[node name="Logo1" type="Sprite2D" parent="."]
 visible = false
+modulate = Color(1, 0, 1, 1)
+position = Vector2(399, 360)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_crs2n")
+
+[node name="title" type="Node2D" parent="."]
 position = Vector2(432, 408)
 
-[node name="TitleFrames" type="Sprite2D" parent="title"]
-position = Vector2(-281, 57)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_f8vvg")
+[node name="LogoExploded" type="Sprite2D" parent="title"]
+position = Vector2(-262, -49)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_100il")
 hframes = 6
 
-[node name="TitleFrames2" type="Sprite2D" parent="title"]
-position = Vector2(-201, 50)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_f8vvg")
+[node name="LogoExploded2" type="Sprite2D" parent="title"]
+position = Vector2(-159, 1)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_100il")
 hframes = 6
 frame = 1
 
-[node name="TitleFrames3" type="Sprite2D" parent="title"]
-position = Vector2(-108, 33)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_f8vvg")
+[node name="LogoExploded3" type="Sprite2D" parent="title"]
+position = Vector2(-66, -2)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_100il")
 hframes = 6
 frame = 2
 
-[node name="TitleFrames4" type="Sprite2D" parent="title"]
-position = Vector2(1, 30)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_f8vvg")
+[node name="LogoExploded4" type="Sprite2D" parent="title"]
+position = Vector2(23, -1)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_100il")
 hframes = 6
 frame = 3
 
-[node name="TitleFrames5" type="Sprite2D" parent="title"]
-position = Vector2(101, 47)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_f8vvg")
+[node name="LogoExploded5" type="Sprite2D" parent="title"]
+position = Vector2(116, -1)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_100il")
 hframes = 6
 frame = 4
 
-[node name="TitleFrames6" type="Sprite2D" parent="title"]
-position = Vector2(194, 40)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_f8vvg")
+[node name="LogoExploded6" type="Sprite2D" parent="title"]
+position = Vector2(222, -1)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_100il")
 hframes = 6
 frame = 5
 
@@ -114,13 +119,6 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_36e2b")
 expand_mode = 1
 stretch_mode = 1
-
-[node name="title_reference" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(407, 470)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_lxppb")
-metadata/_edit_lock_ = true
 
 [node name="buttons" type="Control" parent="."]
 anchors_preset = 0
@@ -300,11 +298,6 @@ offset_right = 708.0
 offset_bottom = 807.0
 bbcode_enabled = true
 text = "[center]Pretend like there is something here"
-
-[node name="Logo1" type="Sprite2D" parent="."]
-position = Vector2(399, 360)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("7_crs2n")
 
 [connection signal="pressed" from="buttons/settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="buttons/credits" to="." method="_on_credits_pressed"]

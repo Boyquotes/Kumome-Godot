@@ -3,11 +3,21 @@ class_name  PlayerRemote
 
 const p1 = '644efdf32044812abebcea64'
 
-var next_player_id : String :
-	set(x):
-		if id == p1:
-			print('>>> ', x)
-		next_player_id = x
+var next_player_id : String
+
+class Diff:
+	var old : String
+	var new : String
+	var loc : Vector2i
+	var valid : bool
+	func _init(_old := '', _new := '', x := 0, y := 0):
+		valid = true
+		old = _old
+		new = _new
+		loc = Vector2i(x, y)
+	func invalid():
+		valid = false
+		return self
 
 func _init(_theme : Global.AVATARS, _team : int, _id : String):
 	super(_theme, _team, _id)
@@ -23,84 +33,102 @@ func receive(event : String, data : Dictionary):
 		next_player_id = data.get('nextPlayerId', '')
 
 
+
 func do_action(action_key : int, board : Array):
+	var act : int = action_key % 256
 	var parsers := {
-		Global.ACTIONS.MOVE : parse_move,
-		Global.ACTIONS.MINE : parse_mine
+		Global.actions.move : parse_move,
+		Global.actions.mine : parse_mine,
+		Global.actions.teleport : parse_teleport,
+		Global.actions.charge : parse_charge
 	}
 
-	difference(game.export_board(), board, parsers.get(action_key, parse_invalid))
+	#prints(action_key, act, parsers.keys(), typeof(parsers.keys()[0]), typeof(act))
+
+	difference(game.export_board(), board, parsers.get(act, parse_invalid), action_key)
 
 func on_action_finished():
-	if id == p1:
-		prints(id, 'action finished', next_player_id)
 	if next_player_id != id:
 		emit_signal('card_finished')
 
 
-func difference(b1 : Array, b2 : Array, parser : Callable):
-	var diffs := []
+func difference(b1 : Array, b2 : Array, parser : Callable, action_key : int):
+	var diffs : Array[Diff] = []
 	for i in range(1, len(b1)):
 		for j in range(1, len(b1[i])):
 			if b1[i][j] != b2[i][j]:
-				diffs.append({
-					'x': i-1,
-					'y': j-1,
-					'old': b1[i][j],
-					'new': b2[i][j]
-				})
+				diffs.append(Diff.new(b1[i][j], b2[i][j], i-1, j-1))
 
-	parser.call(diffs)
+	parser.call(diffs, action_key)
 
-func parse_move(args : Array):
-	var old
-	var new
-	if len(args) != 2:
-		on_invalid_move()
-		return
+func validate_move_diff(diffs : Array[Diff], action_key : int) -> Dictionary:
+	var old : Diff
+	var new : Diff
+	if len(diffs) != 2:
+		on_invalid_action(action_key, 'Invalid number of move diffs %s' % diffs)
+		return {valid = false}
 
-	for arg in args:
-		if not arg is Dictionary:
-			on_invalid_move()
-			return
+	for diff in diffs:
+		if diff.new == '0':
+			old = diff
 
-		if arg.get('new', '') == '0':
-			old = arg
-
-		if arg.get('old', '') == '0':
-			new = arg
+		if diff.old == '0':
+			new = diff
 
 	if old == null or new == null:
-		on_invalid_move()
+		on_invalid_action(action_key, "Didn't find old or new %s %s" % [old, new])
+		return {valid = false}
+
+	return {old = old, new = new, valid = true}
+
+func parse_charge(diffs : Array[Diff], action_key : int):
+	var mines := []
+	var moves := []
+
+
+func parse_move(diffs : Array[Diff], action_key : int):
+	var dict := validate_move_diff(diffs, action_key)
+	if not dict.valid:
 		return
 
-	if maxi(abs(old.x - new.x), abs(old.y - new.y)) != 1:
-		on_invalid_move()
+	var old : Diff = dict.old
+	var new : Diff = dict.new
+
+	var step := old.loc - new.loc
+	if maxi(abs(step.x), abs(step.y)) != 1:
+		on_invalid_action(action_key, 'Bad step: (%s)->(%s)' % [old.loc, new.loc])
 		return
 
-	move_to(Vector2i(new.x, new.y))
+	move_to(new.loc)
 
-func parse_mine(args : Array):
-	if len(args) != 1:
-		on_invalid_move()
+func parse_teleport(diffs : Array[Diff], action_key : int):
+	var dict := validate_move_diff(diffs, action_key)
+	if not dict.valid:
 		return
 
-	var spot = args[0]
+	move_to(dict.new.loc)
+
+func parse_mine(diffs : Array[Diff], action_key : int):
+	if len(diffs) != 1:
+		on_invalid_action(action_key, 'Incorrect number of changes for mine %s ' % diffs)
+		return
+
+	var spot = diffs[0]
 	if spot.old == '0' and spot.new == 'x':
-		place_at(Vector2i(spot.x, spot.y))
+		place_at(spot.loc)
 	else:
-		on_invalid_move()
+		on_invalid_action(action_key, 'Illegal mine %s->%s' % [spot.old, spot.new])
 
-func parse_invalid(_args):
-	on_invalid_move()
+func parse_invalid(args : Array[Diff], action_key : int):
+	on_invalid_action(action_key, 'Invalid args %s' % [args])
 
 
 
-func on_invalid_move():
-	push_warning('bad move')
+func on_invalid_action(action_key : int, note : String):
+	push_warning('invalid: %s: %s' % [action_key, note])
 	await avatar.get_tree().process_frame
 	await avatar.get_tree().process_frame
 	emit_signal('finished')
 
-func send_action(_a):
+func send_action():
 	pass

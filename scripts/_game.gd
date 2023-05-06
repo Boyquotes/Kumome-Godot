@@ -142,11 +142,11 @@ func add_player(p : Player):
 		is_remote = true
 
 
-func send_action(act : String):
+func send_action(key : int):
 	if not is_remote: return
 
 	WS.send_board_update(
-		get_action_key(act),
+		key,
 		active_player.card.key,
 		active_player.id,
 		active_player.id if active_player.is_active else find_next_active_player().id,
@@ -168,20 +168,6 @@ func export_board() -> Array:
 		rv[mine.location.x + 1][mine.location.y + 1] = 'x'
 
 	return rv
-
-func get_action_key(act : String) -> int:
-	var actions := {
-		'move': Global.ACTIONS.MOVE,
-		'place': Global.ACTIONS.MINE,
-		'teleport': Global.ACTIONS.TELEPORT,
-		'unmine': Global.ACTIONS.UNMINE,
-		'swap': Global.ACTIONS.SWAP,
-		'charge': Global.ACTIONS.CHARGE,
-		'target': Global.ACTIONS.TARGET,
-		'invisible': Global.ACTIONS.INVISIBLE,
-		'darkness': Global.ACTIONS.DARKNESS
-	}
-	return actions.get(act, 0)
 
 func add_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
 	return add_any_mine_at(Mine.new(self), at, color)

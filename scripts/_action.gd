@@ -8,10 +8,12 @@ signal finished
 
 var mod : String
 var title : String
+var key : int
 
 func _init(_title : String, _mod : String):
 	mod = _mod
 	title = _title
+	key = Global.get_action_key(title, mod)
 
 # Override this in the subclass to give functionality
 func act(_pl : Player):
