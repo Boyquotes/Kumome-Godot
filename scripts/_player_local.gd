@@ -18,10 +18,11 @@ var phase = PHASE.REST :
 
 var active_target : Vector2i
 
-func pretty_phase(p):
+func pretty_phase(p : PHASE):
 	return PHASE.keys()[p]
 
 func card_override(c : Card) -> bool:
+	prints('play',  c.get_pretty_key())
 	if c.cost > mana:
 		return false
 
@@ -59,7 +60,7 @@ func place():
 
 	phase = PHASE.PLACE
 
-func target(mod):
+func target(mod : String, send := true):
 	phase = PHASE.TARGET
 	avatar.thinking = true
 	if mod == 'SELF':
@@ -75,8 +76,11 @@ func target(mod):
 		add_touch_spots(potentials)
 	else:
 		push_warning('Target: %s not implemented' % mod)
+		return
 
-func teleport(mod):
+	send_action(send)
+
+func teleport(mod : String):
 	avatar.thinking = true
 
 	var potentials : Array[Vector2i]
@@ -108,7 +112,7 @@ func teleport(mod):
 		stuck = true
 		play_stuck()
 
-func swap(mod):
+func swap(mod : String):
 	avatar.thinking = true
 	phase = PHASE.SWAP
 
@@ -121,10 +125,10 @@ func swap(mod):
 
 	add_touch_spots(potentials)
 
-func swap_with(loc):
+func swap_with(loc : Vector2i):
 	var other = game.get_at(loc)
 	if other:
-		other.move_to(location)
+		other.move_to(location, false)
 	move_to(loc)
 
 func unmine():
@@ -162,7 +166,15 @@ func charge(mod : String):
 	else:
 		move_to(location)
 
-func move_target_to(to : Vector2i):
+func turn_invisible(mod : String, send := true):
+	effects |= INVISIBLE
+	avatar.modulate.a = 0.5
+	send_action(send)
+	await avatar.get_tree().process_frame
+	await avatar.get_tree().process_frame
+	emit_signal.call_deferred('finished')
+
+func move_target_to(to : Vector2i, send := true):
 	prints('move', active_target, 'to', to)
 	var player = null
 	for p in game.players:
@@ -170,7 +182,7 @@ func move_target_to(to : Vector2i):
 			player = p
 
 	if player == null:
-		prints('no target')
+		push_warning('no target')
 		emit_signal('finished')
 	elif player == self:
 		prints('move self')
@@ -178,6 +190,7 @@ func move_target_to(to : Vector2i):
 	else:
 		prints('move', player)
 		player.move_to(to)
+		send_action(send)
 		await player.finished
 		await avatar.get_tree().create_timer(0.4).timeout
 		emit_signal('finished')
@@ -193,6 +206,8 @@ func perform_special_action(key : String, mod = null):
 		charge(mod)
 	elif key == 'swap':
 		swap(mod)
+	elif key == 'invisible':
+		turn_invisible(mod)
 	else:
 		super(key)
 
@@ -232,7 +247,7 @@ func clear_touch_spots():
 
 # The touch spots are the little targets that appear on the board and wait for player input.
 # They emit the signal "touched" when touched, and don't do much more than that.
-func add_touch_spots(spot_list):
+func add_touch_spots(spot_list : Array):
 	for pot_spot in spot_list:
 		var touch_spot = preload("res://scenes/touch_spot.tscn").instantiate()
 		touch_spot.location = pot_spot

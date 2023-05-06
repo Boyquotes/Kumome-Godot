@@ -7,6 +7,11 @@ class_name Player
 # "res://scripts/avatar.gd" just know that that class handles animations and whatnot and emits
 # the "finished" signal when it's done animating
 
+enum {
+	INVISIBLE = 1,
+	POISONED = 2,
+	FROZEN = 4
+}
 
 signal finished
 signal card_finished
@@ -23,6 +28,7 @@ var id : String
 var turns := 0
 var card : Card
 var mana := 0
+var effects := 0
 var is_active : bool :
 	get:
 		return len(card.queue) > 0
@@ -112,12 +118,16 @@ func move():
 	pass
 
 # Called when a move decision has actually been made by the subclass
-func move_to(to : Vector2i):
+func move_to(to : Vector2i, send := true):
 	turns += 1
 	avatar.thinking = false
 	location = to
-	avatar.move_to(game.board.to_position(location), emit_signal.bind('finished'))
-	send_action()
+	if send:
+		avatar.move_to(game.board.to_position(location), emit_signal.bind('finished'))
+		send_action(true)
+	else:
+		avatar.move_to(game.board.to_position(location), func() : pass)
+		send_action(false)
 
 # Called to tell the class to begin the mine placing process
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
@@ -125,13 +135,13 @@ func place():
 	pass
 
 # Called when a mine placing decision has actually been made by the subclass
-func place_at(at : Vector2i):
+func place_at(at : Vector2i, send := true):
 	avatar.thinking = false
 	var mine := game.add_mine_at(at, color)
 	mine.avatar.connect('finished', emit_signal.bind('finished'))
-	send_action()
+	send_action(send)
 
-func remove_mine_at(at : Vector2i):
+func remove_mine_at(at : Vector2i, send := true):
 	avatar.thinking = false
 	var mine_maybe : Array[Mine] = game.remove_mine_at(at)
 	if len(mine_maybe):
@@ -140,9 +150,13 @@ func remove_mine_at(at : Vector2i):
 				mine.avatar.connect('finished', emit_signal.bind('finished'))
 	else:
 		emit_signal.call_deferred('finished')
+	send_action(send)
 
 
-func send_action():
+func send_action(send : bool):
+	if not send:
+		return
+
 	var key = card.active_action.key
 	emit_signal('sent', key)
 

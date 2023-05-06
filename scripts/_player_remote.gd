@@ -40,7 +40,11 @@ func do_action(action_key : int, board : Array):
 		Global.actions.move : parse_move,
 		Global.actions.mine : parse_mine,
 		Global.actions.teleport : parse_teleport,
-		Global.actions.charge : parse_charge
+		Global.actions.charge : parse_charge,
+		Global.actions.unmine : parse_unmine,
+		Global.actions.target : parse_target,
+		Global.actions.swap : parse_swap,
+		Global.actions.invisible : parse_invisible
 	}
 
 	#prints(action_key, act, parsers.keys(), typeof(parsers.keys()[0]), typeof(act))
@@ -80,6 +84,45 @@ func validate_move_diff(diffs : Array[Diff], action_key : int, can_gobble := fal
 		return {valid = false}
 
 	return {old = old, new = new, valid = true}
+
+func parse_invisible(diffs: Array[Diff], action_key : int):
+	if len(diffs) > 0:
+		on_invalid_action(action_key, "Can't do additional actions when turning invisible")
+		return
+
+	effects |= INVISIBLE
+	avatar.visible = false
+	emit_signal('finished')
+
+func parse_swap(diffs : Array[Diff], action_key : int):
+	if len(diffs) != 2:
+		on_invalid_action(action_key, "Can't swap %s objects" % len(diffs))
+		return
+
+	var a = game.get_at(diffs[0].loc)
+	var b = game.get_at(diffs[1].loc)
+
+	if a == null or b == null:
+		on_invalid_action(action_key, 'Invalid swap %s %s' % [a, b])
+		return
+
+	a.move_to(diffs[1].loc, a == self)
+	b.move_to(diffs[0].loc, b == self)
+
+
+func parse_target(_diffs : Array[Diff], _action_key : int):
+	pass
+
+func parse_unmine(diffs : Array[Diff], action_key : int):
+	if len(diffs) != 1:
+		on_invalid_action(action_key, 'Can not unmine %s mines' % len(diffs))
+		return
+
+	var diff := diffs[0]
+	if not (diff.old == 'x' and diff.new == '0'):
+		on_invalid_action(action_key, 'Can no unmine %s -> %s' % [diff.old, diff.new])
+
+	remove_mine_at(diff.loc)
 
 func parse_charge(diffs : Array[Diff], action_key : int):
 	print('parse charge ', action_key)
@@ -142,7 +185,15 @@ func parse_teleport(diffs : Array[Diff], action_key : int):
 	if not dict.valid:
 		return
 
-	move_to(dict.new.loc)
+	var teleporter_id = dict.new.new
+	var mover : Player
+	for player in game.players:
+		if player.id == teleporter_id:
+			mover = player
+
+	mover.move_to(dict.new.loc, false)
+	await mover.finished
+	emit_signal('finished')
 
 func parse_mine(diffs : Array[Diff], action_key : int):
 	if len(diffs) != 1:
@@ -166,5 +217,5 @@ func on_invalid_action(action_key : int, note : String):
 	await avatar.get_tree().process_frame
 	emit_signal('finished')
 
-func send_action():
+func send_action(_send : bool):
 	pass

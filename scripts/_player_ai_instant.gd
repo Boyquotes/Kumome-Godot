@@ -31,7 +31,7 @@ func place():
 
 	place_at.call_deferred(spot)
 
-func move_to(to : Vector2i):
+func move_to(to : Vector2i, _send := false):
 	turns += 1
 	avatar.thinking = false
 	location = to
@@ -40,7 +40,7 @@ func move_to(to : Vector2i):
 	emit_signal.call_deferred('finished')
 
 
-func place_at(at : Vector2i):
+func place_at(at : Vector2i, _send := false):
 	avatar.thinking = false
 	game.add_instant_mine_at(at, color)
 	emit_signal.call_deferred('finished')

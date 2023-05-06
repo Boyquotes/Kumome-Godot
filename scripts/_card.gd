@@ -33,8 +33,6 @@ func _init(_data : Dictionary):
 	create_avatar()
 
 
-	prints(String.num_int64(key, 16), key)
-
 func get_key() -> int:
 	if _key != -1:
 		return _key
@@ -50,6 +48,11 @@ func get_key() -> int:
 			shift_key(0, 4)
 
 	return _key
+
+func get_pretty_key() -> String:
+	var s = String.num_int64(key, 16)
+	return '%s|%s|%s|%s|%s|%s' % [s[0], s[1], s[2], s.substr(3,4), s.substr(7,4), s.substr(11,4)]
+
 
 func shift_key(value : int, steps := 1):
 	for _i in steps:
