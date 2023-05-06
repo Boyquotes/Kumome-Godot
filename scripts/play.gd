@@ -18,7 +18,7 @@ func _ready():
 
 	#########################################################
 	# Yannis: You can change this line:
-	var card_indices := [0, 16, 0, 16]
+	var card_indices := [8, 9, 10, 11]
 	##########################################################
 
 	for i in card_indices:

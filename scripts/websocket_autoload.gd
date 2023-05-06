@@ -1,6 +1,6 @@
 extends Node
 
-const url = 'ws://159.223.106.122:3001/'
+var url = 'ws://' + Global.base_url
 
 # Receive
 const rCONNECTED = 'connected'
@@ -30,7 +30,7 @@ func connect_to_server():
 	if is_connected:
 		return
 
-	socket.connect_to_url('%s?token=%s' % [url, Global.active_user.token])
+	socket.connect_to_url('%s/?token=%s' % [url, Global.active_user.token])
 	is_polling = true
 
 func _process(_delta):

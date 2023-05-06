@@ -3,7 +3,9 @@ extends Node
 # This is an autoload, other languages call it a "singleton" Any method or value in this script
 # can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
 
-const url := 'http://159.223.106.122:3001' #http://localhost:3001'
+const base_url := 'localhost:3001'
+#const base_url := '159.223.106.122:3001'
+const url := 'http://' + base_url
 
 const board_4p := '........|........|........|...02...|...31...|........|........|........'
 const board_8p := '........|........|...56...|..2..0..|..1..3..|...74...|........|........'
@@ -47,31 +49,30 @@ func _ready():
 			var path := card_art_path.path_join(img)
 			card_arts[FileAccess.get_md5(path)] = load(path)
 
-	print(card_arts)
 
-func generate_all_cards():
-	var actions = {
-		'move': ['_'],
-		'mine': ['_'],
-		'teleport': ['_', 'ALLY', 'ENEMY', 'EDGE', 'RANDOM'],
-		'unmine': ['_', 'EDGE', 'RANDOM', 'OTHER', 'SELF'],
-		'charge': ['N', 'S', 'E', 'W', 'SE', 'NE', 'SW', 'NW', 'RANDOM'],
-		'target': ['SELF', 'ALLY', 'OTHER', 'RANDOM', 'MINE']
-	}
-
-	var i := 0
-	for a1 in actions:
-		for a2 in actions:
-			for m1 in actions[a1]:
-				for m2 in actions[a2]:
-					if (
-						(a1 == 'teleport') or
-						(a1 == 'target' and a2 != 'teleport') or
-						(a1 != 'target' and a2 == 'teleport')
-					):
-						continue
-					i += 1
-					prints(i, a1, m1, a2, m2)
+#func generate_all_cards():
+#	var actions = {
+#		'move': ['_'],
+#		'mine': ['_'],
+#		'teleport': ['_', 'ALLY', 'ENEMY', 'EDGE', 'RANDOM'],
+#		'unmine': ['_', 'EDGE', 'RANDOM', 'OTHER', 'SELF'],
+#		'charge': ['N', 'S', 'E', 'W', 'SE', 'NE', 'SW', 'NW', 'RANDOM'],
+#		'target': ['SELF', 'ALLY', 'OTHER', 'RANDOM', 'MINE']
+#	}
+#
+#	var i := 0
+#	for a1 in actions:
+#		for a2 in actions:
+#			for m1 in actions[a1]:
+#				for m2 in actions[a2]:
+#					if (
+#						(a1 == 'teleport') or
+#						(a1 == 'target' and a2 != 'teleport') or
+#						(a1 != 'target' and a2 == 'teleport')
+#					):
+#						continue
+#					i += 1
+#					prints(i, a1, m1, a2, m2)
 
 func get_card(n : int) -> Card:
 	return Card.new(get_data('Cards')[n])

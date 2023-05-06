@@ -1,8 +1,6 @@
 extends Player
 class_name  PlayerRemote
 
-const p1 = '644efdf32044812abebcea64'
-
 var next_player_id : String
 
 class Diff:
@@ -18,6 +16,8 @@ class Diff:
 	func invalid():
 		valid = false
 		return self
+	func _to_string():
+		return '< %s, %s, %s >' % [old, new, loc] if valid else '< invalid >'
 
 func _init(_theme : Global.AVATARS, _team : int, _id : String):
 	super(_theme, _team, _id)
@@ -61,18 +61,18 @@ func difference(b1 : Array, b2 : Array, parser : Callable, action_key : int):
 
 	parser.call(diffs, action_key)
 
-func validate_move_diff(diffs : Array[Diff], action_key : int) -> Dictionary:
+func validate_move_diff(diffs : Array[Diff], action_key : int, can_gobble := false) -> Dictionary:
 	var old : Diff
 	var new : Diff
 	if len(diffs) != 2:
-		on_invalid_action(action_key, 'Invalid number of move diffs %s' % diffs)
+		on_invalid_action(action_key, 'Invalid number of move diffs (%s)' % len(diffs))
 		return {valid = false}
 
 	for diff in diffs:
 		if diff.new == '0':
 			old = diff
 
-		if diff.old == '0':
+		if diff.old == '0' or (can_gobble and diff.old == 'x'):
 			new = diff
 
 	if old == null or new == null:
@@ -82,9 +82,45 @@ func validate_move_diff(diffs : Array[Diff], action_key : int) -> Dictionary:
 	return {old = old, new = new, valid = true}
 
 func parse_charge(diffs : Array[Diff], action_key : int):
-	var mines := []
-	var moves := []
+	print('parse charge ', action_key)
+	var mines : Array[Diff] = []
+	var moves : Array[Diff] = []
 
+	for diff in diffs:
+		if (is_user(diff.old) and diff.new == '0') or (not is_user(diff.old) and is_user(diff.new)):
+			moves.append(diff)
+		elif (diff.old == 'x' and diff.new == '0'):
+			mines.append(diff)
+		else:
+			on_invalid_action(action_key, '%s is neither a move no a mine' % diff)
+			return
+
+	var move_dict := validate_move_diff(moves, action_key, true)
+	if not move_dict.valid:
+
+		return
+
+	var old = move_dict.old
+	var new = move_dict.new
+
+	if not is_valid_charge(old, new, mines, action_key):
+		on_invalid_action(action_key, 'Invalid charge')
+		return
+
+	for mine in mines:
+		remove_mine_at(mine.loc)
+	if new.old == 'x':
+		remove_mine_at(new.loc)
+
+	move_to(new.loc)
+
+func is_user(s : String):
+	return s != 'x' and s != '0'
+
+func is_valid_charge(_old, _new, _mines, _action_key):
+	# Check to make sure that all the mines live on the ray from old to new
+	# and that old and new are the correct ray
+	return true
 
 func parse_move(diffs : Array[Diff], action_key : int):
 	var dict := validate_move_diff(diffs, action_key)
