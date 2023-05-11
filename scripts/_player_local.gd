@@ -2,11 +2,14 @@ extends Player
 class_name PlayerHuman
 
 enum PHASE {
-	#Basic
+	# Basic
 	REST, MOVE, PLACE, STUCK,
 
-	#Special
-	UNMINE, TARGET, CHARGE, TELEPORT, SWAP
+	# Special
+	UNMINE, TARGET, CHARGE, TELEPORT, SWAP,
+
+	# Attack/Defend
+	ATTACK, DEFEND
 }
 
 var touch_spots := []
@@ -22,7 +25,7 @@ func pretty_phase(p : PHASE):
 	return PHASE.keys()[p]
 
 func card_override(c : Card) -> bool:
-	prints('play',  c.get_pretty_key())
+	#prints('play',  c.get_pretty_key())
 	if c.cost > mana:
 		return false
 
@@ -59,6 +62,21 @@ func place():
 	add_touch_spots(potentials)
 
 	phase = PHASE.PLACE
+
+func attack(spots : Array[Vector2i]):
+	var potentials : Array[Vector2i] = game.get_opens()
+
+	add_touch_spots(potentials)
+
+	phase = PHASE.ATTACK
+	attack_defend_rel_spots = spots
+
+func defend(spots : Array[Vector2i]):
+	var potentials : Array[Vector2i] = game.get_all()
+	add_touch_spots(potentials)
+
+	phase = PHASE.DEFEND
+	attack_defend_rel_spots = spots
 
 func target(mod : String, send := true):
 	phase = PHASE.TARGET
@@ -166,7 +184,7 @@ func charge(mod : String):
 	else:
 		move_to(location)
 
-func turn_invisible(mod : String, send := true):
+func turn_invisible(_mod : String, send := true):
 	effects |= INVISIBLE
 	avatar.modulate.a = 0.5
 	send_action(send)
@@ -235,6 +253,10 @@ func on_touch_spot_touched(at : Vector2i):
 		move_target_to(at)
 	elif phase == PHASE.SWAP:
 		swap_with(at)
+	elif phase == PHASE.ATTACK:
+		attack_at(at)
+	elif phase == PHASE.DEFEND:
+		defend_at(at)
 	else:
 		push_warning('Confused touch spot ', at, phase)
 

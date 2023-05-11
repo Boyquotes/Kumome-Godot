@@ -44,4 +44,37 @@ layout_mode = 0
 offset_right = 800.0
 offset_bottom = 738.0
 
+[node name="count" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -729.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="count"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 42
+
+[node name="lower" type="Button" parent="count/HBoxContainer"]
+layout_mode = 2
+text = " < "
+
+[node name="players" type="Label" parent="count/HBoxContainer"]
+layout_mode = 2
+text = "Players:"
+
+[node name="count" type="Label" parent="count/HBoxContainer"]
+layout_mode = 2
+text = "2"
+
+[node name="raise" type="Button" parent="count/HBoxContainer"]
+layout_mode = 2
+text = " > "
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="count/HBoxContainer/lower" to="." method="_on_lower_pressed"]
+[connection signal="pressed" from="count/HBoxContainer/raise" to="." method="_on_raise_pressed"]

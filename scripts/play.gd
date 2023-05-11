@@ -18,11 +18,13 @@ func _ready():
 
 	#########################################################
 	# Yannis: You can change this line:
-	var card_indices := [18, 19, 20, 22]
+
+	deck.append(Global.get_card(22))
+	deck.append(Global.get_attack(2))
+	deck.append(Global.get_defend(2))
+	deck.append(Global.get_attack(42))
 	##########################################################
 
-	for i in card_indices:
-		deck.append(Global.get_card(i))
 
 	add_cards()
 	space_cards()

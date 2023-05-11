@@ -34,3 +34,7 @@ func _on_p_2_pressed():
 	$center/vbox/email.text = 'fake2@email.com'
 	_on_log_in_pressed()
 
+
+func _on_p_3_pressed():
+	$center/vbox/email.text = 'fake3@email.com'
+	_on_log_in_pressed()

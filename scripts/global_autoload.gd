@@ -26,9 +26,18 @@ var settings := {
 	special_cards_per_game = 2
 }
 
+var action_defend_rel_dirs : Array[Vector2i] = [
+	Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1),
+	Vector2i(-1,  0), Vector2i(0,  0), Vector2i(1,  0),
+	Vector2i(-1,  1), Vector2i(0,  1), Vector2i(1,  1)
+]
+
 var actions : Dictionary = {}
 var modifiers : Dictionary = {}
 var card_arts : Dictionary = {}
+
+var attacks := []
+var defends := []
 
 @onready var data : Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://resources/data.json"))
 
@@ -49,10 +58,118 @@ func _ready():
 			var path := card_art_path.path_join(img)
 			card_arts[FileAccess.get_md5(path)] = load(path)
 
+	for ad in get_data('AttacksAndDefends'):
+		if ad.attack:
+			attacks.append(get_attack_defend_key(true, ad))
+		if ad.defend:
+			defends.append(get_attack_defend_key(false, ad))
+
+#	var keys = []
+#	for i in range(23):
+#		keys.append(get_card(i).key)
+#
+#	print(keys):
+
+# 0 1 2
+# 3 4 5
+# 6 7 8
+
+func get_attack_defend_key(attack : bool, dict : Dictionary) -> int:
+	var locs : Array[int] = []
+	locs.append(int(dict.primary))
+	var n = len(locs)
+
+	while len(locs) < 12:
+		locs.append(int(dict.get('additional_%s' % n, 0)))
+		n += 1
+
+	var cost : int = dict.cost
+	var key := 0
+	key = shift_key(key, 2)
+	key = shift_key(key, 10 if attack else 13)
+	key = shift_key(key, cost)
+
+	for loc in locs:
+		key = shift_key(key, loc)
+
+	return key
+
+
+func generate_attacks(count):
+	var list : Array[Array] = [empty()]
+	for _i in count:
+		list = next_gen(list)
+
+	list = filter(list)
+	for grid in list:
+		pos_print(grid)
+	print(len(list))
+
+func pos_print(grid : Array):
+	var a := []
+	for n in len(grid):
+		if grid[n]:
+			a.append(n + 1)
+	print(a)
+
+func pretty_print(grid : Array):
+	var s = ''
+	var n := 0
+	for b in grid:
+		n += 1
+		s += ('x' if b else '.')
+		if n % 3 == 0:
+			s += '\n'
+
+	print(s)
+
+func empty() -> Array:
+	var rv : Array = []
+	rv.resize(9)
+	rv.fill(false)
+	return rv
+
+func next_gen(list : Array[Array]) -> Array[Array]:
+	var rv : Array[Array] = []
+	for grid in list:
+		for n in 9:
+			if grid[n] == false:
+				var next = grid.duplicate()
+				next[n] = true
+				rv.append(next)
+
+	return rv
+
+func shift_up(line : Array) -> Array:
+	return line.slice(3) + line.slice(0, 3)
+
+func shift_left(line : Array) -> Array:
+	return [line[1], line[2], line[0], line[4], line[5], line[3], line[7], line[8], line[6]]
+
+func to_canonical(grid : Array) -> Array:
+	while not (grid[0] or grid[1] or grid[2]):
+		grid = shift_up(grid)
+	while not (grid[0] or grid[3] or grid[6]):
+		grid = shift_left(grid)
+	return grid
+
+
+func filter(list : Array[Array]) -> Array[Array]:
+	var rv : Array[Array] = []
+	for grid in list:
+		if not to_canonical(grid) in rv:
+			rv.append(to_canonical(grid))
+	return rv
+
+func shift_key(key : int, value : int, steps := 1):
+	for _i in steps:
+		key *= 16
+	key += value
+	return key
 
 #func generate_all_cards():
 #	var actions = {
-#		'move': ['_'],
+#		'move': ['_'],tgyhbbbbbbbb
 #		'mine': ['_'],
 #		'teleport': ['_', 'ALLY', 'ENEMY', 'EDGE', 'RANDOM'],
 #		'unmine': ['_', 'EDGE', 'RANDOM', 'OTHER', 'SELF'],
@@ -77,6 +194,12 @@ func _ready():
 func get_card(n : int) -> Card:
 	return Card.new(get_data('Cards')[n])
 
+func get_attack(n : int) -> Card:
+	return CardAttackDefend.new(attacks[n])
+
+func get_defend(n : int) -> Card:
+	return CardAttackDefend.new(defends[n])
+
 func get_action_key(act : String, mod : String) -> int:
 	if not act in actions or not mod in modifiers:
 		push_warning('Invaild (action, modifier): (%sv %s)' % [act, mod])
@@ -93,6 +216,63 @@ func get_data(sheet_name : String) -> Array[Dictionary]:
 			break
 
 	return rv
+
+func get_pretty_key(key) -> String:
+	var s = String.num_int64(key, 16)
+	return '%s|%s|%s|%s|%s|%s' % [s[0], s[1], s[2], s.substr(3,4), s.substr(7,4), s.substr(11,4)]
+
+func explode_key(key) -> Dictionary:
+	var rv := {'nibbles': [], 'blocks': []}
+	for n in 12:
+		rv['d%s' % (11 - n)] = key % 16
+		rv['nibbles'].push_front(key % 16)
+		key /= 16
+
+	rv['c'] = key % 16
+	key /= 16
+
+	rv['s'] = key % 16
+	key /= 16
+
+	rv['v'] = key % 16
+
+	for i in 3:
+		rv['blocks'].append(0)
+		for j in 4:
+			rv['blocks'][i] += powi(16, 3-j)*rv['d%s' % (j + 4*i)]
+
+	rv['pretty'] = '%s|%s|%s|%s|%s|%s' % [
+		String.num_int64(rv['v'], 16),
+		String.num_int64(rv['s'], 16),
+		String.num_int64(rv['c'], 16),
+		pad(String.num_int64(rv['blocks'][0], 16), 4),
+		pad(String.num_int64(rv['blocks'][1], 16), 4),
+		pad(String.num_int64(rv['blocks'][2], 16), 4)
+	]
+
+	if rv['s'] == 1:
+		rv['schema'] = 'action'
+	elif rv['s'] == 10:
+		rv['schema'] = 'attack'
+	elif rv['s'] == 13:
+		rv['schema'] = 'defend'
+	elif rv['s'] == 14:
+		rv['schema'] = 'error'
+	else:
+		rv['schema'] = 'unknown'
+
+	return rv
+
+func powi(base : int, ex : int) -> int:
+	if ex <= 0:
+		return 1
+	else:
+		return base * powi(base, ex - 1)
+
+func pad(s : String, amnt : int) -> String:
+	while len(s) < amnt:
+		s = '0' + s
+	return s
 
 func adjust_setting(st, val):
 	assert(st in settings)

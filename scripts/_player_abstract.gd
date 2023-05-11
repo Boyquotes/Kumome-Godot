@@ -9,8 +9,9 @@ class_name Player
 
 enum {
 	INVISIBLE = 1,
-	POISONED = 2,
-	FROZEN = 4
+	DARKNESS = 2,
+	POISONED = 4,
+	FROZEN = 8
 }
 
 signal finished
@@ -34,6 +35,7 @@ var is_active : bool :
 		return len(card.queue) > 0
 
 var color : Color
+var attack_defend_rel_spots : Array[Vector2i]
 
 func _init(_theme : Global.AVATARS, _team : int, _id : String):
 	id = _id
@@ -139,6 +141,24 @@ func place_at(at : Vector2i, send := true):
 	avatar.thinking = false
 	var mine := game.add_mine_at(at, color)
 	mine.avatar.connect('finished', emit_signal.bind('finished'))
+	send_action(send)
+
+func attack(spots : Array[Vector2i]):
+	prints('attack', spots)
+
+func attack_at(at : Vector2i, send := true):
+	place_at(at, false)
+	for dir in attack_defend_rel_spots:
+		place_at(at + dir, false)
+	send_action(send)
+
+func defend(spots : Array[Vector2i]):
+	prints('defend', spots)
+
+func defend_at(at : Vector2i, send := true):
+	remove_mine_at(at, false)
+	for dir in attack_defend_rel_spots:
+		remove_mine_at(at + dir, false)
 	send_action(send)
 
 func remove_mine_at(at : Vector2i, send := true):

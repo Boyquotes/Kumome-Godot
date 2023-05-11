@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cueas8la42gm5" path="res://fonts/Barlow-Italic.ttf" id="3_isvor"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ugap"]
-bg_color = Color(0.713726, 0.290196, 0.290196, 1)
+bg_color = Color(0.94902, 0.737255, 0.560784, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6uqm"]
 bg_color = Color(0.94902, 0.737255, 0.560784, 1)

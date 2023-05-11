@@ -26,3 +26,11 @@ func do(pl : Player, what : Callable):
 
 func _to_string():
 	return '<%s %s>' % [title, mod]
+
+func parse_attack_defend_mod() -> Array[Vector2i]:
+	var additionals : Array[Vector2i] = []
+	var split := mod.split('|')
+	for s in split:
+		var xy := s.split(',')
+		additionals.append(Vector2i(xy[0].to_int(), xy[1].to_int()))
+	return additionals

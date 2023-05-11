@@ -11,7 +11,9 @@ signal selected
 var actions := {
 	move = preload("res://scripts/actions/move.gd"),
 	mine = preload("res://scripts/actions/mine.gd"),
-	special = preload("res://scripts/actions/special.gd")
+	special = preload("res://scripts/actions/special.gd"),
+	attack = preload("res://scripts/actions/attack.gd"),
+	defend = preload("res://scripts/actions/defend.gd")
 }
 
 var queue : Array[Action] = []
@@ -38,26 +40,19 @@ func get_key() -> int:
 		return _key
 
 	_key = 0
-	shift_key(2)
-	shift_key(1)
-	shift_key(cost)
+	_key = Global.shift_key(_key, 2)
+	_key = Global.shift_key(_key, 1)
+	_key = Global.shift_key(_key, cost)
 	for i in 3:
 		if i < len(queue):
-			shift_key(queue[i].key, 4)
+			_key = Global.shift_key(_key, queue[i].key, 4)
 		else:
-			shift_key(0, 4)
+			_key = Global.shift_key(_key, 0, 4)
 
 	return _key
 
-func get_pretty_key() -> String:
-	var s = String.num_int64(key, 16)
-	return '%s|%s|%s|%s|%s|%s' % [s[0], s[1], s[2], s.substr(3,4), s.substr(7,4), s.substr(11,4)]
-
-
-func shift_key(value : int, steps := 1):
-	for _i in steps:
-		_key *= 16
-	_key += value
+func get_pretty_key():
+	return Global.get_pretty_key(_key)
 
 func create_avatar():
 	avatar = preload("res://scenes/avatar_card.tscn").instantiate()
@@ -81,8 +76,10 @@ func discard():
 	queue_free()
 	return
 
-func add_action(a : String, m : String):
+func add_action(a : String, m : String, k := -1):
 	if a == '_': return
 	var action : Action = actions.get(a, actions.special).new(a, m)
+	if k > -1:
+		action.key = k
 
 	queue.append(action)

@@ -18,5 +18,5 @@ func discard():
 	queue_free()
 
 
-func add_action(_a : String, _m : String):
+func add_action(_a : String, _m : String, _k := -1):
 	pass

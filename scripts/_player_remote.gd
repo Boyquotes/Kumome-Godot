@@ -180,6 +180,27 @@ func parse_move(diffs : Array[Diff], action_key : int):
 
 	move_to(new.loc)
 
+func parse_attack(diffs : Array[Diff], _action_key : int):
+	# I can't be bothered to validate this right now. Worry about validation later.
+#	var dict : Dictionary = Global.explode_key(action_key)
+#	var indices : Array[int] = []
+#	var rel_locs : Array[Vector2i] = []
+#	for index in dict.nibbles:
+#		if index != 0:
+#			indices.append(index)
+#			rel_locs.append()
+#
+#	print(Global.explode_key(action_key))
+	for diff in diffs:
+		if diff.old == '0' and diff.new == 'x':
+			place_at(diff.loc, false)
+
+func parse_defend(diffs : Array[Diff], _action_key : int):
+	# I can't be bothered to validate this right now. Worry about validation later.
+	for diff in diffs:
+		if diff.old == 'x' and diff.new == '0':
+			remove_mine_at(diff.loc, false)
+
 func parse_teleport(diffs : Array[Diff], action_key : int):
 	var dict := validate_move_diff(diffs, action_key)
 	if not dict.valid:
@@ -197,7 +218,7 @@ func parse_teleport(diffs : Array[Diff], action_key : int):
 
 func parse_mine(diffs : Array[Diff], action_key : int):
 	if len(diffs) != 1:
-		on_invalid_action(action_key, 'Incorrect number of changes for mine %s ' % diffs)
+		on_invalid_action(action_key, 'Incorrect number of changes for mine %s ' % len(diffs))
 		return
 
 	var spot = diffs[0]
@@ -207,7 +228,14 @@ func parse_mine(diffs : Array[Diff], action_key : int):
 		on_invalid_action(action_key, 'Illegal mine %s->%s' % [spot.old, spot.new])
 
 func parse_invalid(args : Array[Diff], action_key : int):
-	on_invalid_action(action_key, 'Invalid args %s' % [args])
+	var explode = Global.explode_key(action_key)
+	if explode.schema == 'attack':
+		parse_attack(args, action_key)
+	elif explode.schema == 'defend':
+		parse_defend(args, action_key)
+	else:
+		print(explode)
+		on_invalid_action(action_key, 'Invalid args %s' % [args])
 
 
 

@@ -50,6 +50,8 @@ func _process(_delta):
 			if response.get('type', 'error') == 'data':
 				var data = response.get('data', {})
 				emit_signal('received', data.get('event', ''), data.get('data', {}))
+			else:
+				push_warning('error! ', response)
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
 		pass

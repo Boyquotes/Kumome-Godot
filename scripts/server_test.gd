@@ -10,7 +10,7 @@ func _on_request_completed(_result, response_code, _headers, body : PackedByteAr
 	var data : Dictionary = (JSON.parse_string(body.get_string_from_utf8()))
 	if response_code == 201:
 		prints('DATA', data)
-		Global.log_in({'token': data.token})
+		Global.log_in(data)
 		swap_to_scene(preload("res://scenes/title.tscn"))
 	else:
 		$hold_on.visible = false

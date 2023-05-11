@@ -86,6 +86,7 @@ expand_mode = 1
 
 [node name="cost" type="Sprite2D" parent="."]
 position = Vector2(176, 16)
+rotation = 0.785398
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_t1ufg")
 hframes = 6

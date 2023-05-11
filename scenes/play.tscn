@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cj3l5q62epbji"]
 
 [ext_resource type="Theme" uid="uid://bmnlkeb5yfupy" path="res://resources/default_theme.tres" id="1_101pm"]
-[ext_resource type="Script" path="res://scripts/play.gd" id="2_edoqp"]
+[ext_resource type="Script" path="res://scripts/play.gd" id="2_clrs4"]
 [ext_resource type="PackedScene" uid="uid://c0kd3jux5k5k6" path="res://scenes/board.tscn" id="2_hgrrs"]
 [ext_resource type="PackedScene" uid="uid://bvwuid1wk8tv0" path="res://scenes/hud.tscn" id="3_cqrnu"]
 [ext_resource type="Texture2D" uid="uid://dxgyp2e42cpqm" path="res://imgs/happy.png" id="3_lanb8"]
@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_101pm")
-script = ExtResource("2_edoqp")
+script = ExtResource("2_clrs4")
 
 [node name="bg" type="ColorRect" parent="."]
 z_index = -2

@@ -213,12 +213,16 @@ func is_open(at : Vector2i) -> bool:
 func is_valid_spot(at : Vector2i) -> bool:
 	return at.x >= 0 and at.y >= 0 and at.x < dimensions.x and at.y < dimensions.y
 
-# Get all uncluttered points
-func get_opens() -> Array[Vector2i]:
+func get_all() -> Array[Vector2i]:
 	var rv : Array[Vector2i] = []
 	for i in dimensions.x:
 		for j in dimensions.y:
 			rv.append(Vector2i(i, j))
+	return rv
+
+# Get all uncluttered points
+func get_opens() -> Array[Vector2i]:
+	var rv := get_all()
 
 	for player in players:
 		rv.erase(player.location)

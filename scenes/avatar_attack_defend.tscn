@@ -1,0 +1,127 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckpyujm7r6be8"]
+
+[ext_resource type="Texture2D" uid="uid://csdhe8brq3ycl" path="res://imgs/attack_defend_grid.png" id="1_pcmgd"]
+[ext_resource type="Script" path="res://scripts/avatar_attack_defend.gd" id="1_v2k0j"]
+[ext_resource type="Texture2D" uid="uid://br6qrwi2ydw53" path="res://imgs/attack_defend_mine.png" id="2_b1djc"]
+[ext_resource type="Texture2D" uid="uid://b2k0wdq7d86cr" path="res://imgs/card_cost.png" id="4_sw5hx"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 192.0
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v2k0j")
+
+[node name="bg" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133333, 0.301961, 0.376471, 1)
+
+[node name="Button" type="Button" parent="bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="grid" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 184.0
+offset_bottom = 184.0
+mouse_filter = 2
+texture = ExtResource("1_pcmgd")
+
+[node name="mines" type="Node2D" parent="."]
+
+[node name="AttackDefendMine" type="Sprite2D" parent="mines"]
+position = Vector2(38, 38)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine2" type="Sprite2D" parent="mines"]
+position = Vector2(96, 38)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine3" type="Sprite2D" parent="mines"]
+position = Vector2(154, 38)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine4" type="Sprite2D" parent="mines"]
+position = Vector2(38, 96)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine5" type="Sprite2D" parent="mines"]
+position = Vector2(96, 96)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine6" type="Sprite2D" parent="mines"]
+position = Vector2(154, 96)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine7" type="Sprite2D" parent="mines"]
+position = Vector2(38, 154)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine8" type="Sprite2D" parent="mines"]
+position = Vector2(96, 154)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="AttackDefendMine9" type="Sprite2D" parent="mines"]
+position = Vector2(154, 154)
+texture = ExtResource("2_b1djc")
+hframes = 6
+frame = 1
+
+[node name="title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.837
+anchor_right = 0.5
+anchor_bottom = 0.837
+offset_left = -87.0
+offset_top = -29.056
+offset_right = 87.0
+offset_bottom = 28.944
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Attack"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cost" type="Sprite2D" parent="."]
+position = Vector2(176, 16)
+rotation = 0.785398
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_sw5hx")
+hframes = 6
+frame = 1
+
+[connection signal="pressed" from="bg/Button" to="." method="_on_button_pressed"]
