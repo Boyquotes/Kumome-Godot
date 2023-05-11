@@ -3,8 +3,8 @@ extends Node
 # This is an autoload, other languages call it a "singleton" Any method or value in this script
 # can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
 
-const base_url := 'localhost:3001'
-#const base_url := '159.223.106.122:3001'
+#const base_url := 'localhost:3001'
+const base_url := '159.223.106.122:3001'
 const url := 'http://' + base_url
 
 const board_4p := '........|........|........|...02...|...31...|........|........|........'

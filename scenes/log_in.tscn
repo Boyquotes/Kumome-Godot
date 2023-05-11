@@ -123,6 +123,7 @@ theme_override_font_sizes/font_size = 48
 text = "Logging in..."
 
 [node name="p2" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 274.0
 offset_top = 506.0
@@ -131,6 +132,7 @@ offset_bottom = 583.0
 text = "--player 3--"
 
 [node name="p3" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 279.0
 offset_top = 415.0
