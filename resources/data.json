@@ -1197,8 +1197,7 @@
 				},
 				{
 					"typeStr": "7",
-					"name": "portaits",
-					"display": null
+					"name": "portraits"
 				},
 				{
 					"typeStr": "7",
@@ -1217,28 +1216,28 @@
 					"name": "Da Jirou",
 					"bust": "da053b0fb83238c1623beb37c1b45a4e",
 					"color": 11852191,
-					"portaits": "e20bb2e1a2f027e86cabf145b35700b1"
+					"portraits": "e20bb2e1a2f027e86cabf145b35700b1"
 				},
 				{
 					"key": "bert",
 					"name": "Bert",
 					"bust": "6e9601b1a9616c9f783806c9dd79eebf",
 					"color": 11982319,
-					"portaits": "05cba8a0c209cd40d4dcd0a53e588487"
+					"portraits": "05cba8a0c209cd40d4dcd0a53e588487"
 				},
 				{
 					"key": "saidi",
 					"name": "Saidi",
 					"bust": "6b1856161fe7cd17cdf0dee24f2b9731",
 					"color": 15513777,
-					"portaits": "77a3bd435287381986cd1af87dad1ea1"
+					"portraits": "77a3bd435287381986cd1af87dad1ea1"
 				},
 				{
 					"key": "nubia",
 					"name": "Nubia",
 					"bust": "4043c60233ed2a42dd8c63e9abc5717a",
 					"color": 15916706,
-					"portaits": "fbfc2a90e58bb213b785853029cb6e3b"
+					"portraits": "fbfc2a90e58bb213b785853029cb6e3b"
 				}
 			],
 			"separators": [],

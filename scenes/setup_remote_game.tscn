@@ -19,9 +19,9 @@ anchors_preset = -1
 anchor_left = 0.58
 anchor_right = 0.58
 offset_left = -375.0
-offset_top = 945.5
+offset_top = 1596.0
 offset_right = 294.0
-offset_bottom = 1674.5
+offset_bottom = 1675.0
 text = "Connecting..."
 
 [node name="Button" type="Button" parent="."]
@@ -32,24 +32,28 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -147.0
-offset_top = -38.5
+offset_top = 510.0
 offset_right = 147.0
-offset_bottom = 38.5
+offset_bottom = 587.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Join Game"
 
-[node name="Label2" type="Label" parent="."]
+[node name="Label2" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_right = 800.0
-offset_bottom = 738.0
+offset_bottom = 1180.0
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "3213213213131321321"
 
 [node name="count" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -729.0
+offset_top = 966.0
+offset_bottom = -148.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

@@ -9,13 +9,20 @@ var player_pool := []
 func _ready():
 	$Label2.text = Global.active_user.id + '\n'
 	WS.connect('received', on_message_received)
+	WS.connect('received_error', on_error_received)
+	WS.connect('sent', on_message_sent)
 	WS.connect_to_server()
 	$Button.disabled = not WS.is_connected
 	inc_count(0)
 
+func on_error_received(code : String, error : Dictionary):
+	show_msg(code, error, 'RED')
+
+func on_message_sent(code : String, data : Dictionary):
+	show_msg(code, data, 'GREEN')
 
 func on_message_received(event : String, data : Dictionary):
-	show_msg(event, data)
+	show_msg(event, data, 'GRAY')
 
 	if event == WS.rCONNECTED:
 		$Button.disabled = data.get('playerId') == Global.active_user.id
@@ -26,7 +33,6 @@ func on_message_received(event : String, data : Dictionary):
 		print('Game ID: ', WS.game_id)
 		var player_id = data.get('playerId')
 		prints('id', player_id, data.get('username'))
-		show_msg(event, data)
 		var start := add_player(player_id)
 		if start:
 			WS.send(WS.sGAME_START, {}, true)
@@ -46,13 +52,11 @@ func start_game(data : Dictionary):
 	emit_signal('generated_level', board)
 	swap_to_scene(preload("res://scenes/play.tscn"))
 
-func show_msg(event : String, data : Dictionary):
-	$Label2.text += event + ' ' + data.get('username', '') + '\n'
+func show_msg(event : String, data : Dictionary, color := 'WHITE'):
+	$Label2.text += '[color=%s] %s %s [/color]\n' % [color, event, data.get('username', '')]
 
 func _on_button_pressed():
 	WS.send(WS.sJOIN, {'boardId': 'traditional-1-%s' % count}, false)
-	print('send join')
-	$Label2.text += 'send join\n'
 	$Button.disabled = true
 
 	for child in $count/HBoxContainer.get_children():

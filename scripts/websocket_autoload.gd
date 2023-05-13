@@ -19,6 +19,7 @@ const sGAME_OVER = "freeForAll/onGameOver"
 signal connected
 signal received
 signal received_error
+signal sent
 
 var socket = WebSocketPeer.new()
 var is_connected := false
@@ -47,11 +48,15 @@ func _process(_delta):
 		while socket.get_available_packet_count():
 			var raw_response : PackedByteArray = socket.get_packet()
 			var response = JSON.parse_string(raw_response.get_string_from_utf8())
+
 			if response.get('type', 'error') == 'data':
 				var data = response.get('data', {})
 				emit_signal('received', data.get('event', ''), data.get('data', {}))
 			else:
-				push_warning('error! ', response)
+				var error = response.get('error', {})
+				emit_signal('received_error', error.get('code'), error)
+				push_warning('error! ', error)
+
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
 		pass
@@ -66,6 +71,7 @@ func send(event : String, data : Dictionary, with_game_id : bool):
 	if with_game_id:
 		data['gameId'] = game_id
 
+	emit_signal('sent', event, data)
 	socket.send_text(JSON.stringify({
 		"event": event,
 		"data": data
