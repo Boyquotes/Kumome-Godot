@@ -139,8 +139,12 @@ func place():
 # Called when a mine placing decision has actually been made by the subclass
 func place_at(at : Vector2i, send := true):
 	avatar.thinking = false
-	var mine := game.add_mine_at(at, color)
-	mine.avatar.connect('finished', emit_signal.bind('finished'))
+	var mines := game.add_mine_at(at, color)
+	if len(mines):
+		for mine in mines:
+			mine.avatar.connect('finished', emit_signal.bind('finished'))
+	else:
+		emit_signal.call_deferred('finished')
 	send_action(send)
 
 func attack(spots : Array[Vector2i]):
@@ -172,6 +176,13 @@ func remove_mine_at(at : Vector2i, send := true):
 		emit_signal.call_deferred('finished')
 	send_action(send)
 
+func play_stuck():
+	add_card(CardStuck.new())
+	card.act(self)
+
+func act_stuck(send := true):
+	avatar.play_stuck()
+	send_action(send)
 
 func send_action(send : bool):
 	if not send:
@@ -179,6 +190,7 @@ func send_action(send : bool):
 
 	var key = card.active_action.key
 	emit_signal('sent', key)
+
 
 # Must be overridden by a subclass. (see "res://scripts/_player_ai.gd", "res://scripts/_player_local.gd")
 func perform_special_action(action_key : String, _extra_args = null):
@@ -194,9 +206,7 @@ func on_avatar_finished():
 		emit_signal('finished')
 		emit_signal('card_finished')
 
-func play_stuck():
-	#emit_signal('got_stuck')
-	avatar.play_stuck()
+
 
 # Useful for debugging purposes
 func _to_string():

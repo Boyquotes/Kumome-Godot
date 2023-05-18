@@ -44,7 +44,8 @@ func do_action(action_key : int, board : Array):
 		Global.actions.unmine : parse_unmine,
 		Global.actions.target : parse_target,
 		Global.actions.swap : parse_swap,
-		Global.actions.invisible : parse_invisible
+		Global.actions.invisible : parse_invisible,
+		Global.actions.stuck : parse_stuck
 	}
 
 	#prints(action_key, act, parsers.keys(), typeof(parsers.keys()[0]), typeof(act))
@@ -84,6 +85,10 @@ func validate_move_diff(diffs : Array[Diff], action_key : int, can_gobble := fal
 		return {valid = false}
 
 	return {old = old, new = new, valid = true}
+
+func parse_stuck(_diffs: Array[Diff], _action_key : int):
+	stuck = true
+	act_stuck(false)
 
 func parse_invisible(diffs: Array[Diff], action_key : int):
 	if len(diffs) > 0:

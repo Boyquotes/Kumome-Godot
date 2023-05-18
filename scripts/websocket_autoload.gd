@@ -68,6 +68,9 @@ func _process(_delta):
 		set_process(false) # Stop processing.
 
 func send(event : String, data : Dictionary, with_game_id : bool):
+	if not is_connected:
+		return
+
 	if with_game_id:
 		data['gameId'] = game_id
 

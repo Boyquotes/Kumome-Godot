@@ -13,7 +13,8 @@ var actions := {
 	mine = preload("res://scripts/actions/mine.gd"),
 	special = preload("res://scripts/actions/special.gd"),
 	attack = preload("res://scripts/actions/attack.gd"),
-	defend = preload("res://scripts/actions/defend.gd")
+	defend = preload("res://scripts/actions/defend.gd"),
+	stuck = preload("res://scripts/actions/stuck.gd")
 }
 
 var queue : Array[Action] = []

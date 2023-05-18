@@ -144,7 +144,7 @@ func on_game_over():
 		$ui/win_record.text = '%s - %s' % [win_record.get(0, 0), win_record.get(1, 0)]
 		create(level_code)
 	else:
-		$ui/game_over.text = 'Team %s Wins!' % 'ABCDEFG'[winning_team]
+		$game_over.text = 'Team %s Wins!' % 'ABCDEFG'[winning_team]
 
 func clear_children(list : Array[Node]):
 	for node in list:

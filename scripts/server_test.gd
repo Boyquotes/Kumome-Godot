@@ -11,7 +11,7 @@ func _on_request_completed(_result, response_code, _headers, body : PackedByteAr
 	if response_code == 201:
 		prints('DATA', data)
 		Global.log_in(data)
-		swap_to_scene(preload("res://scenes/title.tscn"))
+		swap_to_scene(preload("res://scenes/log_in.tscn"))
 	else:
 		$hold_on.visible = false
 		var error = data.get('error', 'Unknown Error')

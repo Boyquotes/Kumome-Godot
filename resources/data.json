@@ -1022,7 +1022,7 @@
 				{
 					"key": 8,
 					"name": "invisible",
-					"implemented": false,
+					"implemented": true,
 					"notes": "Turn invisible for some number of turns"
 				},
 				{
@@ -1030,6 +1030,12 @@
 					"name": "darkness",
 					"implemented": false,
 					"notes": "Apply darkness to board for some number of turns"
+				},
+				{
+					"key": 10,
+					"name": "stuck",
+					"implemented": false,
+					"notes": "Internal use only, do not add to a card."
 				}
 			],
 			"separators": [],

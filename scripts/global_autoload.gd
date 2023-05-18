@@ -3,8 +3,8 @@ extends Node
 # This is an autoload, other languages call it a "singleton" Any method or value in this script
 # can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
 
-#const base_url := 'localhost:3001'
-const base_url := '159.223.106.122:3001'
+const base_url := 'localhost:3001'
+#const base_url := '159.223.106.122:3001'
 const url := 'http://' + base_url
 
 const board_4p := '........|........|........|...02...|...31...|........|........|........'
@@ -166,30 +166,6 @@ func shift_key(key : int, value : int, steps := 1):
 		key *= 16
 	key += value
 	return key
-
-#func generate_all_cards():
-#	var actions = {
-#		'move': ['_'],tgyhbbbbbbbb
-#		'mine': ['_'],
-#		'teleport': ['_', 'ALLY', 'ENEMY', 'EDGE', 'RANDOM'],
-#		'unmine': ['_', 'EDGE', 'RANDOM', 'OTHER', 'SELF'],
-#		'charge': ['N', 'S', 'E', 'W', 'SE', 'NE', 'SW', 'NW', 'RANDOM'],
-#		'target': ['SELF', 'ALLY', 'OTHER', 'RANDOM', 'MINE']
-#	}
-#
-#	var i := 0
-#	for a1 in actions:
-#		for a2 in actions:
-#			for m1 in actions[a1]:
-#				for m2 in actions[a2]:
-#					if (
-#						(a1 == 'teleport') or
-#						(a1 == 'target' and a2 != 'teleport') or
-#						(a1 != 'target' and a2 == 'teleport')
-#					):
-#						continue
-#					i += 1
-#					prints(i, a1, m1, a2, m2)
 
 func get_card(n : int) -> Card:
 	return Card.new(get_data('Cards')[n])

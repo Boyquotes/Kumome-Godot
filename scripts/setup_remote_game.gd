@@ -57,6 +57,8 @@ func show_msg(event : String, data : Dictionary, color := 'WHITE'):
 
 func _on_button_pressed():
 	WS.send(WS.sJOIN, {'boardId': 'traditional-1-%s' % count}, false)
+	#WS.send(WS.sJOIN, {'boardId': 'test-1-2'}, false)
+
 	$Button.disabled = true
 
 	for child in $count/HBoxContainer.get_children():

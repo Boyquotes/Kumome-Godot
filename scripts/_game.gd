@@ -49,8 +49,8 @@ func run():
 		active_player.play_card()
 		await active_player.card_finished
 
+	on_game_over()
 
-	emit_signal('game_over')
 
 func game_is_over() -> bool:
 	return len(get_active_teams()) < 2
@@ -61,6 +61,15 @@ func get_winning_team() -> int:
 		return active_teams[0]
 	else:
 		return -1
+
+func get_winning_players() -> Array[Player]:
+	var wt := get_winning_team()
+	var rv : Array[Player] = []
+	for player in players:
+		if player.team == wt:
+			rv.append(player)
+
+	return rv
 
 func get_active_teams() -> Array[int]:
 	var active_teams : Array[int] = []
@@ -121,6 +130,12 @@ func get_next_active_player() -> void:
 
 	active_player = best_player
 
+func on_game_over():
+	emit_signal('game_over')
+	WS.send(WS.sGAME_OVER, {
+		#'winnerId': get_winning_players()[0].id
+	}, true)
+
 func minimum(list : Array):
 	var lowest = list[0]
 	for x in list:
@@ -169,10 +184,10 @@ func export_board() -> Array:
 
 	return rv
 
-func add_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
+func add_mine_at(at : Vector2i, color := Color.BLACK) -> Array[Mine]:
 	return add_any_mine_at(Mine.new(self), at, color)
 
-func add_instant_mine_at(at : Vector2i, color := Color.BLACK) -> Mine:
+func add_instant_mine_at(at : Vector2i, color := Color.BLACK) -> Array[Mine]:
 	return add_any_mine_at(MineInstant.new(), at, color)
 
 
@@ -188,14 +203,17 @@ func remove_mine_at(at : Vector2i) -> Array[Mine]:
 		mines.erase(mine)
 	return rv
 
-func add_any_mine_at(mine : Mine, at : Vector2i, color : Color) -> Mine:
+func add_any_mine_at(mine : Mine, at : Vector2i, color : Color) -> Array[Mine]:
+	if not is_open(at):
+		return []
+
 	mine.location = at
 	mine.avatar.modulate = color
 	mine.avatar.position = board.to_position(at)
 	mine.avatar.size = board.square_size
 	mines.append(mine)
 	emit_signal('added_mine', mine)
-	return mine
+	return [mine]
 
 # Is the requested point cluttered with mines/other players?
 func is_open(at : Vector2i) -> bool:

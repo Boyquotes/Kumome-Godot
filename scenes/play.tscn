@@ -53,6 +53,23 @@ z_index = 2
 
 [node name="touch_spots" type="Node2D" parent="."]
 
+[node name="game_over" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -722.0
+offset_right = 309.0
+offset_bottom = -636.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_mobuj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ui" type="Control" parent="."]
 visible = false
 z_index = 30
@@ -87,23 +104,6 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 64
 text = "Quit"
-
-[node name="game_over" type="Label" parent="ui"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.5
-offset_top = -463.0
-offset_right = 75.5
-offset_bottom = -377.0
-grow_horizontal = 2
-grow_vertical = 2
-label_settings = SubResource("LabelSettings_mobuj")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="player" type="Sprite2D" parent="ui"]
 position = Vector2(-336, 1385)
