@@ -1,5 +1,7 @@
 extends Node
 
+# Test
+
 # This is an autoload, other languages call it a "singleton" Any method or value in this script
 # can be accessed via the global variable "Global" For example, Global.board_4p or Global.adjust_settings()
 
